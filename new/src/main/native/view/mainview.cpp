@@ -127,14 +127,11 @@ void MainView::initialize_status(GtkWidget* widget) {
 void MainView::initialize_view_left(GtkWidget* widget) {
   GtkWidget* box_logo = gtk_vbox_new(FALSE, 0);
   GtkWidget* box_param = gtk_vbox_new(FALSE, 0);
-  GtkWidget* box_custom = gtk_vbox_new(FALSE, 0);
 
   gtk_widget_set_size_request(box_logo, 0, MAINVIEW_LOGO_HEIGHT);
-  gtk_widget_set_size_request(box_custom, 0, MAINVIEW_CUSTOM_HEIGHT);
 
   gtk_box_pack_start(GTK_BOX(widget), box_logo, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(widget), box_param, TRUE, TRUE, 0);
-  gtk_box_pack_start(GTK_BOX(widget), box_custom, FALSE, FALSE, 0);
 
   // -----------------------------------------------------
 
@@ -147,7 +144,6 @@ void MainView::initialize_view_left(GtkWidget* widget) {
 
   //GtkWidget* button_logo = gtk_button_new_with_label("LOGO");
   GtkWidget* button_param = gtk_button_new_with_label("图像参数区");
-  GtkWidget* button_custom = gtk_button_new_with_label("自定义按键功能指示区");
 
   GdkColor color;
   gdk_color_parse(GDKCOLOR_BUTTON, &color);
@@ -156,11 +152,9 @@ void MainView::initialize_view_left(GtkWidget* widget) {
   gtk_container_add(GTK_CONTAINER(box_logo), img_logo);
   //gtk_container_add(GTK_CONTAINER(box_logo), button_logo);
   gtk_container_add(GTK_CONTAINER(box_param), button_param);
-  gtk_container_add(GTK_CONTAINER(box_custom), button_custom);
 
   //gtk_widget_modify_bg(button_logo, GTK_STATE_NORMAL, &m_bg_color);
   gtk_widget_modify_bg(button_param, GTK_STATE_NORMAL, &m_bg_color);
-  gtk_widget_modify_bg(button_custom, GTK_STATE_NORMAL, &m_bg_color);
 }
 
 // 初始化主视图中间信息区
@@ -168,30 +162,24 @@ void MainView::initialize_view_info(GtkWidget* widget) {
   GtkWidget* box_patient_info = gtk_hbox_new(FALSE, 0);
   GtkWidget* box_image = gtk_vbox_new(FALSE, 0);
   GtkWidget* box_playback = gtk_vbox_new(FALSE, 0);
-  GtkWidget* box_cursor = gtk_vbox_new(FALSE, 0);
 
   gtk_widget_set_size_request(box_patient_info, 0, MAINVIEW_LOGO_HEIGHT);
   gtk_widget_set_size_request(box_playback, 0, MAINVIEW_PLAYBACK_HEIGHT);
-  gtk_widget_set_size_request(box_cursor, 0, MAINVIEW_CURSOR_HEIGHT);
 
   gtk_box_pack_start(GTK_BOX(widget), box_patient_info, FALSE, FALSE, 0);
   gtk_box_pack_start(GTK_BOX(widget), box_image, TRUE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(widget), box_playback, FALSE, FALSE, 0);
-  gtk_box_pack_start(GTK_BOX(widget), box_cursor, FALSE, FALSE, 0);
 
   // -----------------------------------------------------
 
   GtkWidget* button_image = gtk_button_new_with_label("图像区");
   GtkWidget* button_playback = gtk_button_new_with_label("电影回放区");
-  GtkWidget* button_cursor = gtk_button_new_with_label("光标资源区");
 
   gtk_container_add(GTK_CONTAINER(box_image), button_image);
   gtk_container_add(GTK_CONTAINER(box_playback), button_playback);
-  gtk_container_add(GTK_CONTAINER(box_cursor), button_cursor);
 
   gtk_widget_modify_bg(button_image, GTK_STATE_NORMAL, &m_bg_color);
   gtk_widget_modify_bg(button_playback, GTK_STATE_NORMAL, &m_bg_color);
-  gtk_widget_modify_bg(button_cursor, GTK_STATE_NORMAL, &m_bg_color);
 
   initialize_view_patient_info(box_patient_info);
 }
@@ -201,7 +189,7 @@ void MainView::initialize_view_right(GtkWidget* widget) {
   GtkWidget* box_store = gtk_vbox_new(FALSE, 0);
   GtkWidget* box_thumb = gtk_vbox_new(FALSE, 0);
 
-  gtk_widget_set_size_request(box_thumb, 0, MAINVIEW_CURSOR_HEIGHT);
+  gtk_widget_set_size_request(box_thumb, 0, MAINVIEW_PLAYBACK_HEIGHT);
 
   gtk_box_pack_start(GTK_BOX(widget), box_store, TRUE, TRUE, 0);
   gtk_box_pack_start(GTK_BOX(widget), box_thumb, FALSE, FALSE, 0);
