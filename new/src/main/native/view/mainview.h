@@ -29,6 +29,10 @@ private:
 
   static MainView* m_instance;
 
+  GdkColor m_fg_color;
+  GdkColor m_bg_color;
+  GdkColor m_btn_color;
+
   GtkWidget* m_window;
 };
 

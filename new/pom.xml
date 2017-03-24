@@ -104,6 +104,9 @@
 
             <configuration>
               <target name='install'>
+                <copy todir='${project.build.directory}' overwrite='true' failonerror='true'>
+                  <fileset dir='src/assembly'/>
+                </copy>
               </target>
             </configuration>
           </execution>

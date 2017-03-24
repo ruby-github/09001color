@@ -13,6 +13,10 @@ MainView* MainView::get_instance() {
 
 MainView::MainView() {
   m_window = NULL;
+
+  gdk_color_parse(GDKCOLOR_FOREGROUND, &m_fg_color);
+  gdk_color_parse(GDKCOLOR_BACKGROUND, &m_bg_color);
+  gdk_color_parse(GDKCOLOR_BUTTON, &m_btn_color);
 }
 
 MainView::~MainView() {
@@ -32,10 +36,7 @@ void MainView::initialize() {
   gtk_window_set_position(GTK_WINDOW(m_window), GTK_WIN_POS_CENTER);
 
   gtk_container_set_border_width(GTK_CONTAINER(m_window), 0);
-
-  GdkColor color;
-  gdk_color_parse(GDKCOLOR_BACKGROUND, &color);
-  gtk_widget_modify_bg(m_window, GTK_STATE_NORMAL, &color);
+  gtk_widget_modify_bg(m_window, GTK_STATE_NORMAL, &m_bg_color);
 
   g_signal_connect(GTK_OBJECT(m_window), "destroy", G_CALLBACK (gtk_main_quit), NULL);
 
@@ -137,7 +138,14 @@ void MainView::initialize_view_left(GtkWidget* widget) {
 
   // -----------------------------------------------------
 
-  GtkWidget* button_logo = gtk_button_new_with_label("LOGO");
+  GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(std::string(g_application_path + "/" + IMG_LOGO_FILE).c_str(), NULL);
+  GdkPixbuf* scale = gdk_pixbuf_scale_simple(pixbuf, 180, 57, GDK_INTERP_BILINEAR);
+
+  GtkWidget* img_logo = gtk_image_new_from_pixbuf(scale);
+  g_object_unref(pixbuf);
+  g_object_unref(scale);
+
+  //GtkWidget* button_logo = gtk_button_new_with_label("LOGO");
   GtkWidget* button_param = gtk_button_new_with_label("图像参数区");
   GtkWidget* button_custom = gtk_button_new_with_label("自定义按键功能指示区");
 
@@ -145,9 +153,14 @@ void MainView::initialize_view_left(GtkWidget* widget) {
   gdk_color_parse(GDKCOLOR_BUTTON, &color);
   gtk_widget_modify_bg(box_logo, GTK_STATE_NORMAL, &color);
 
-  gtk_container_add(GTK_CONTAINER(box_logo), button_logo);
+  gtk_container_add(GTK_CONTAINER(box_logo), img_logo);
+  //gtk_container_add(GTK_CONTAINER(box_logo), button_logo);
   gtk_container_add(GTK_CONTAINER(box_param), button_param);
   gtk_container_add(GTK_CONTAINER(box_custom), button_custom);
+
+  //gtk_widget_modify_bg(button_logo, GTK_STATE_NORMAL, &m_bg_color);
+  gtk_widget_modify_bg(button_param, GTK_STATE_NORMAL, &m_bg_color);
+  gtk_widget_modify_bg(button_custom, GTK_STATE_NORMAL, &m_bg_color);
 }
 
 // 初始化主视图中间信息区
@@ -176,6 +189,10 @@ void MainView::initialize_view_info(GtkWidget* widget) {
   gtk_container_add(GTK_CONTAINER(box_playback), button_playback);
   gtk_container_add(GTK_CONTAINER(box_cursor), button_cursor);
 
+  gtk_widget_modify_bg(button_image, GTK_STATE_NORMAL, &m_bg_color);
+  gtk_widget_modify_bg(button_playback, GTK_STATE_NORMAL, &m_bg_color);
+  gtk_widget_modify_bg(button_cursor, GTK_STATE_NORMAL, &m_bg_color);
+
   initialize_view_patient_info(box_patient_info);
 }
 
@@ -196,6 +213,9 @@ void MainView::initialize_view_right(GtkWidget* widget) {
 
   gtk_container_add(GTK_CONTAINER(box_store), button_store);
   gtk_container_add(GTK_CONTAINER(box_thumb), button_thumb);
+
+  gtk_widget_modify_bg(button_store, GTK_STATE_NORMAL, &m_bg_color);
+  gtk_widget_modify_bg(button_thumb, GTK_STATE_NORMAL, &m_bg_color);
 }
 
 // 初始化病人信息区
@@ -230,6 +250,9 @@ void MainView::initialize_view_patient_info(GtkWidget* widget) {
 
   // -----------------------------------------------------
 
+  GdkColor color;
+  gdk_color_parse("green", &color);
+
   GtkWidget* button_patient = gtk_button_new_with_label("病人信息区");
   GtkWidget* button_hospital = gtk_button_new_with_label("医院名称");
   GtkWidget* button_sound = gtk_button_new_with_label("声功率 ");
@@ -247,4 +270,19 @@ void MainView::initialize_view_patient_info(GtkWidget* widget) {
   gtk_container_add(GTK_CONTAINER(box_mode), button_mode);
 
   gtk_container_add(GTK_CONTAINER(box_time), button_time);
+
+  gtk_widget_modify_bg(button_patient, GTK_STATE_PRELIGHT, &m_btn_color);
+  gtk_widget_modify_bg(button_hospital, GTK_STATE_PRELIGHT, &m_btn_color);
+  gtk_widget_modify_bg(button_sound, GTK_STATE_PRELIGHT, &m_btn_color);
+  gtk_widget_modify_bg(button_output, GTK_STATE_PRELIGHT, &m_btn_color);
+  gtk_widget_modify_bg(button_probe, GTK_STATE_PRELIGHT, &m_btn_color);
+  gtk_widget_modify_bg(button_mode, GTK_STATE_PRELIGHT, &m_btn_color);
+
+  gtk_widget_modify_bg(button_patient, GTK_STATE_NORMAL, &m_bg_color);
+  gtk_widget_modify_bg(button_hospital, GTK_STATE_NORMAL, &m_bg_color);
+  gtk_widget_modify_bg(button_sound, GTK_STATE_NORMAL, &m_bg_color);
+  gtk_widget_modify_bg(button_output, GTK_STATE_NORMAL, &m_bg_color);
+  gtk_widget_modify_bg(button_probe, GTK_STATE_NORMAL, &m_bg_color);
+  gtk_widget_modify_bg(button_mode, GTK_STATE_NORMAL, &m_bg_color);
+  gtk_widget_modify_bg(button_time, GTK_STATE_NORMAL, &m_bg_color);
 }
