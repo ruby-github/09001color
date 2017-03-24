@@ -1,0 +1,28 @@
+#ifndef __CONFIG_H__
+#define __CONFIG_H__
+
+#define SCREEN_WIDTH  1024
+#define SCREEN_HEIGHT 768
+
+#define MAINVIEW_MENU_HEIGHT      100
+#define MAINVIEW_STATUS_HEIGHT    50
+
+#define MAINVIEW_LEFT_WIDTH       200
+#define MAINVIEW_RIGHT_WIDTH      200
+
+#define MAINVIEW_LOGO_HEIGHT      100
+#define MAINVIEW_CUSTOM_HEIGHT    100
+
+#define MAINVIEW_PATIENT_HEIGHT   30
+#define MAINVIEW_PLAYBACK_HEIGHT  30
+#define MAINVIEW_CURSOR_HEIGHT    100
+
+#define MAINVIEW_TIME_WIDTH       100
+
+#define LOCALE_PATH   "/usr/share/locale"
+#define PACKAGE_NAME  "09001_lang"
+
+#define GDKCOLOR_BACKGROUND "#2a2f3a"
+#define GDKCOLOR_BUTTON "green"
+
+#endif
