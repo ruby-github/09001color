@@ -119,6 +119,9 @@
 
             <configuration>
               <target name='install'>
+                <delete dir='${output}/res' failonerror='false'/>
+                <delete dir='${output}/${project.artifactId}' failonerror='false'/>
+
                 <copy todir='${output}' overwrite='true' failonerror='true'>
                   <fileset dir='src/assembly'/>
                 </copy>
