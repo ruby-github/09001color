@@ -48,7 +48,7 @@ GtkWidget* MenuArea::Create(void) {
     PangoFontDescription *font = pango_font_description_from_string("WenQuanYi Zen Hei, bold, 14");
     m_labelSub = create_label(_("Sub Menu"), widthMax, TOP_AREA_H, g_white, font);
     gtk_label_set_justify(GTK_LABEL(m_labelSub), GTK_JUSTIFY_CENTER);
-    gtk_fixed_put(GTK_FIXED(ViewMain::GetInstance()->GetMainWindowFixed()), m_labelSub, 0, 0);
+    //gtk_fixed_put(GTK_FIXED(ViewMain::GetInstance()->GetMainWindowFixed()), m_labelSub, 0, 0);
     pango_font_description_free(font);
 
     m_fixedMenu = gtk_fixed_new();

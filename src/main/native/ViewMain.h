@@ -15,8 +15,8 @@
 
 // #define STATUS_X 220
 // #define STATUS_Y 644
-// #define STATUS_WIDTH 150
-// #define STATUS_HEIGHT (45-2)
+#define STATUS_WIDTH 150
+#define STATUS_HEIGHT (45-2)
 
 //#define HINT_X (370+2)
 #define HINT_X 180 //ModLayout 180 PreLayout 220
@@ -53,9 +53,9 @@ public:
     void MenuReviewCallBack(void);
 
     GtkWidget* GetMainWindow(void);
-    GtkWidget* GetMainWindowFixed() {
-        return m_fixedWindow;
-    }
+    //GtkWidget* GetMainWindowFixed() {
+    //    return m_fixedWindow;
+    //}
     void KeyEvent(unsigned char keyValue);
     void KnobEvent(unsigned char keyValue, unsigned char offset);
     void SliderEvent(unsigned char keyValue, unsigned char offset);
@@ -75,8 +75,6 @@ private:
     static ViewMain* m_ptrInstance;
     static bool m_cursorVisible;
     int countN;
-    GtkWidget* m_mainWindow;
-    GtkWidget* m_fixedWindow;
     GtkWidget* m_daMenu;
     KnobMenu* m_ptrKnob;
     ImageArea* m_ptrImgArea;
@@ -84,8 +82,8 @@ private:
     HintArea* m_ptrHintArea;
     MenuArea* m_ptrMenuArea;
     NoteArea* m_ptrNoteArea;
-//signal handle
-//signal connect
+    //signal handle
+    //signal connect
 
     void MySleep(int msecond);
     int keyTSIN;
@@ -108,6 +106,22 @@ private:
         return m_ptrInstance->IsSuperAuthenValid();
     }
 
+public:
+  void initialize();
+
+private:
+  void initialize_userselect();
+
+  void initialize_top(GtkWidget* widget);
+  void initialize_shortcut_menu(GtkWidget* widget);
+  void initialize_message(GtkWidget* widget);
+
+  void initialize_top_params(GtkWidget* widget);
+  void initialize_top_image(GtkWidget* widget);
+  void initialize_top_menu(GtkWidget* widget);
+
+private:
+  GtkWidget* m_window;
 };
 
 #endif

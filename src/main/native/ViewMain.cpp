@@ -48,6 +48,17 @@
 #include "sysMan/UserSelect.h"           //addec by LL
 
 #include "imageControl/FpgaCtrl2D.h"
+
+
+
+#include "config.h"
+#include "utils/utils.h"
+
+#include <iostream>
+
+using namespace std;
+
+
 extern MenuPW g_menuPW;
 // test_Artifact
 // #include "imageProc/ImgProcCfm.h"
@@ -2502,7 +2513,7 @@ gboolean UpdateTopArea(gpointer data) {
 ViewMain* ViewMain::m_ptrInstance = NULL;
 
 ViewMain::ViewMain() {
-    m_mainWindow = 0;
+    m_window = NULL;
     countN = 0;
     m_ptrKnob = KnobMenu::GetInstance();
     m_ptrImgArea = ImageArea::GetInstance();
@@ -2527,15 +2538,15 @@ ViewMain* ViewMain::GetInstance() {
 }
 
 GtkWidget* ViewMain::GetMainWindow(void) {
-    return m_mainWindow;
+    return m_window;
 }
 
 void ViewMain::Show(void) {
-    gtk_widget_show_all(m_mainWindow);
+    gtk_widget_show_all(m_window);
 }
 
 void ViewMain::Hide(void) {
-    gtk_widget_hide_all(m_mainWindow);
+    gtk_widget_hide_all(m_window);
 }
 
 void ViewMain::ShowMenu(void) {
@@ -2544,127 +2555,6 @@ void ViewMain::ShowMenu(void) {
 
 void ViewMain::HideMenu(void) {
     gtk_widget_show(m_daMenu);
-}
-
-void ViewMain::Create(void) {
-    UserSelect::GetInstance()->create_userconfig_dir();//addec by LL
-    UserSelect::GetInstance()->create_userdefined_dir();
-    UserSelect::GetInstance()->create_commentdefined_dir();
-    UserSelect::GetInstance()->create_usercalcdefined_dir();
-    UserSelect::GetInstance()->creat_username_db(USERNAME_DB);
-    UserSelect::GetInstance()->save_active_user_id(0);
-
-    m_mainWindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-    gtk_window_set_decorated(GTK_WINDOW(m_mainWindow), FALSE);
-    gtk_window_set_position(GTK_WINDOW(m_mainWindow), GTK_WIN_POS_CENTER);
-    gtk_window_set_resizable(GTK_WINDOW(m_mainWindow), FALSE);
-    gtk_widget_set_size_request(m_mainWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
-    gtk_container_set_border_width(GTK_CONTAINER(m_mainWindow), 0);
-    gtk_widget_modify_bg(m_mainWindow, GTK_STATE_NORMAL, g_deep);
-
-//	g_signal_connect(m_mainWindow,"key-press-event",G_CALLBACK(HandleKeyPressEvent),this);
-
-    m_fixedWindow = gtk_fixed_new();
-    gtk_widget_set_usize(m_fixedWindow, SCREEN_WIDTH, SCREEN_HEIGHT);
-    gtk_widget_set_uposition(m_fixedWindow, 0, 0);
-    gtk_container_add(GTK_CONTAINER(m_mainWindow), m_fixedWindow);
-
-    // Knob Area
-    GtkWidget *tableKnob;
-    tableKnob = m_ptrKnob->Create();
-    gtk_fixed_put(GTK_FIXED(m_fixedWindow), tableKnob, KNOB_X, KNOB_Y);
-#if 0
-    char tmp[20];
-    int detal_x = WIDTH_KNOB_MENU / 20;
-    int detal_y = HEIGHT_KNOB_MENU / 3;
-    GtkWidget* label_tmp;
-    for(int i = 0; i < 5; i++) {
-        sprintf(tmp, "F%d", i+1);
-        label_tmp = gtk_label_new_with_mnemonic(tmp);
-        gtk_fixed_put(GTK_FIXED(m_fixedWindow), label_tmp, KNOB_X + detal_x + i * detal_x * 18 / 5, KNOB_Y + detal_y);
-    }
-#endif
-    // Menu Area
-    GtkWidget *tableMenu;
-    tableMenu = m_ptrMenuArea->Create();
-    gtk_fixed_put(GTK_FIXED(m_fixedWindow), tableMenu, 0, TOP_AREA_H);
-
-    m_daMenu = gtk_drawing_area_new();
-    gtk_widget_modify_bg(m_daMenu, GTK_STATE_NORMAL, g_black);
-    gtk_drawing_area_size(GTK_DRAWING_AREA(m_daMenu), MENU_AREA_W, IMG_AREA_H+HINT_AREA_H);
-    gtk_fixed_put(GTK_FIXED(m_fixedWindow), m_daMenu, 0, TOP_AREA_H+2);
-
-    // 2D knob menu
-    KnobD2Create();
-
-    // image area
-    GtkWidget *da_image;
-    da_image = m_ptrImgArea->Create();
-    gtk_fixed_put(GTK_FIXED(m_fixedWindow), da_image, IMG_AREA_X, IMG_AREA_Y);
-    m_ptrImgArea->AddTimeOutFps();
-
-    // note area
-    GtkWidget *canvas_note;
-    canvas_note = m_ptrNoteArea->Create();
-    gtk_fixed_put(GTK_FIXED(m_fixedWindow), canvas_note, IMAGE_X+IMG_AREA_X, IMAGE_Y+IMG_AREA_Y);
-
-    // Top area
-    GtkWidget *da_topArea;
-    da_topArea = m_ptrTopArea->Create();
-    gtk_fixed_put(GTK_FIXED(m_fixedWindow), da_topArea, TOP_AREA_X, TOP_AREA_Y);
-    m_ptrTopArea->AddTimeOut();
-
-    // status area
-    // GtkWidget *status_area = gtk_drawing_area_new();
-    // gtk_drawing_area_size(GTK_DRAWING_AREA(status_area), STATUS_WIDTH, STATUS_HEIGHT);
-    // gtk_fixed_put(GTK_FIXED(m_fixedWindow),status_area, STATUS_X, STATUS_Y);
-    // gtk_widget_modify_bg(status_area, GTK_STATE_NORMAL, g_black);
-
-    GtkWidget *da_hintArea;
-    da_hintArea = m_ptrHintArea->Create();
-    gtk_fixed_put(GTK_FIXED(m_fixedWindow), da_hintArea, HINT_X, HINT_Y);
-
-    // icon view
-    ViewIcon::GetInstance()->Create();
-    gtk_fixed_put(GTK_FIXED(m_fixedWindow), ViewIcon::GetInstance()->GetIconArea(), 5, 742); // 740
-
-    g_keyInterface.Push(this);
-
-    Show();
-    gtk_widget_hide(m_daMenu);
-
-    m_ptrNoteArea->Hide();
-
-    // update top area
-    SysGeneralSetting *sysGeneralSetting = new SysGeneralSetting;
-    string hospital_name;
-    sysGeneralSetting->GetHospital(hospital_name);
-    delete sysGeneralSetting;
-
-    m_ptrTopArea->UpdateHospitalName(hospital_name.c_str());
-
-    // m_ptrTopArea->UpdateProbeType("4C-RS");
-    // m_ptrTopArea->UpdateCheckPart("ABD");
-    // m_ptrTopArea->UpdateDepth(167);
-    // m_ptrTopArea->UpdateMI(0.9);
-    // m_ptrTopArea->UpdateTIS(0.4);
-
-    // patient info
-    g_patientInfo.UpdateTopArea();
-
-    // ViewSystem::GetInstance()->CreateWindow();
-    // ViewNewPat::GetInstance()->CreateWindow();
-    // for test, enter archive dialog
-    //ClickArchive(NULL);
-    //test(NULL);
-
-#ifdef EMP_3410
-    if(g_authorizationOn)
-        CEmpAuthorization::Create(&g_keyInterface, REGISTER_FILE_PATH, 0);
-#else
-    if(g_authorizationOn)
-        CEmpAuthorization::Create(&g_keyInterface, REGISTER_FILE_PATH, 1);
-#endif
 }
 
 void ViewMain::MySleep(int msecond) {
@@ -2691,3 +2581,222 @@ void ViewMain::MySleep(int msecond) {
 	}
 	return TRUE;
 }*/
+
+
+// ---------------------------------------------------------
+
+void ViewMain::Create(void) {
+  initialize_userselect();
+  initialize();
+
+  // 2D knob menu
+  KnobD2Create();
+
+  //g_keyInterface.Push(this);
+
+  Show();
+  gtk_widget_hide(m_daMenu);
+  m_ptrNoteArea->Hide();
+
+  // update top area
+  SysGeneralSetting *sysGeneralSetting = new SysGeneralSetting;
+  string hospital_name;
+  sysGeneralSetting->GetHospital(hospital_name);
+  delete sysGeneralSetting;
+
+  m_ptrTopArea->UpdateHospitalName(hospital_name.c_str());
+
+  // patient info
+  g_patientInfo.UpdateTopArea();
+
+  #ifdef EMP_3410
+    if(g_authorizationOn) {
+      CEmpAuthorization::Create(&g_keyInterface, REGISTER_FILE_PATH, 0);
+    }
+  #else
+    if(g_authorizationOn) {
+      CEmpAuthorization::Create(&g_keyInterface, REGISTER_FILE_PATH, 1);
+    }
+  #endif
+}
+
+void ViewMain::initialize() {
+  // 初始化主窗口
+
+  m_window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+
+  //gtk_window_set_decorated(GTK_WINDOW(m_window), FALSE);
+  gtk_window_set_default_size(GTK_WINDOW(m_window), SCREEN_WIDTH, SCREEN_HEIGHT);
+  gtk_window_set_position(GTK_WINDOW(m_window), GTK_WIN_POS_CENTER);
+
+  gtk_container_set_border_width(GTK_CONTAINER(m_window), 0);
+  gtk_widget_modify_bg(m_window, GTK_STATE_NORMAL, get_bg_color());
+
+  g_signal_connect(GTK_OBJECT(m_window), "destroy", G_CALLBACK (gtk_main_quit), NULL);
+
+  // 初始化视图
+
+  GtkWidget* box = gtk_vbox_new(FALSE, 0);
+  gtk_container_add(GTK_CONTAINER(m_window), box);
+
+  GtkWidget* top_box = gtk_hbox_new(FALSE, 0);
+  GtkWidget* shortcut_menu_box = gtk_hbox_new(FALSE, 0);
+  GtkWidget* message_box = gtk_hbox_new(FALSE, 0);
+
+  gtk_widget_set_size_request(shortcut_menu_box, 0, SHORTCUT_MENU_HEIGHT);
+  gtk_widget_set_size_request(message_box, 0, MESSAGE_HEIGHT);
+
+  gtk_box_pack_start(GTK_BOX(box), top_box, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(box), shortcut_menu_box, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(box), message_box, FALSE, FALSE, 0);
+
+  initialize_top(top_box);
+  initialize_shortcut_menu(shortcut_menu_box);
+  initialize_message(message_box);
+}
+
+void ViewMain::initialize_userselect() {
+  UserSelect::GetInstance()->create_userconfig_dir();
+  UserSelect::GetInstance()->create_userdefined_dir();
+  UserSelect::GetInstance()->create_commentdefined_dir();
+  UserSelect::GetInstance()->create_usercalcdefined_dir();
+  UserSelect::GetInstance()->creat_username_db(USERNAME_DB);
+  UserSelect::GetInstance()->save_active_user_id(0);
+}
+
+// TOP图像信息区
+void ViewMain::initialize_top(GtkWidget* widget) {
+  GtkWidget* params_box = gtk_vbox_new(FALSE, 0);
+  GtkWidget* image_box = gtk_hbox_new(FALSE, 0);
+  GtkWidget* menu_box = gtk_vbox_new(FALSE, 0);
+
+  gtk_widget_set_size_request(params_box, LOGO_WIDTH, 0);
+  gtk_widget_set_size_request(menu_box, MENU_WIDTH, 0);
+
+  gtk_box_pack_start(GTK_BOX(widget), params_box, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(widget), image_box, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(widget), menu_box, FALSE, FALSE, 0);
+
+  initialize_top_params(params_box);
+  initialize_top_image(image_box);
+  initialize_top_menu(menu_box);
+}
+
+// 底部快捷菜单区
+void ViewMain::initialize_shortcut_menu(GtkWidget* widget) {
+  GtkWidget* left_reserved_box = gtk_vbox_new(FALSE, 0);
+  GtkWidget* shortcut_menu_box = gtk_hbox_new(FALSE, 0);
+  GtkWidget* right_reserved_box = gtk_vbox_new(FALSE, 0);
+
+  gtk_widget_set_size_request(left_reserved_box, LOGO_WIDTH, 0);
+  gtk_widget_set_size_request(right_reserved_box, RIGHT_RESERVED_WIDTH, 0);
+
+  gtk_box_pack_start(GTK_BOX(widget), left_reserved_box, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(widget), shortcut_menu_box, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(widget), right_reserved_box, FALSE, FALSE, 0);
+
+  // 左侧侧保留区
+
+  ViewIcon::GetInstance()->Create();
+  gtk_box_pack_start(GTK_BOX(left_reserved_box), ViewIcon::GetInstance()->GetIconArea(), TRUE, TRUE, 0);
+
+  // 快捷菜单区
+
+  GtkWidget *tableKnob = m_ptrKnob->Create();
+  gtk_box_pack_start(GTK_BOX(shortcut_menu_box), tableKnob, TRUE, TRUE, 0);
+
+  // 右侧保留区
+}
+
+// 底部消息区
+void ViewMain::initialize_message(GtkWidget* widget) {
+  GtkWidget* message_box = gtk_vbox_new(FALSE, 0);
+  GtkWidget* status_box = gtk_hbox_new(FALSE, 0);
+
+  gtk_widget_set_size_request(status_box, 200, 0);
+
+  gtk_box_pack_start(GTK_BOX(widget), message_box, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(widget), status_box, FALSE, FALSE, 0);
+}
+
+// TOP左侧图像参数区
+void ViewMain::initialize_top_params(GtkWidget* widget) {
+  GtkWidget* logo_box = gtk_vbox_new(FALSE, 0);
+  GtkWidget* params_box = gtk_vbox_new(FALSE, 0);
+  GtkWidget* reserved_box = gtk_vbox_new(FALSE, 0);
+
+  gtk_widget_set_size_request(logo_box, 0, LOGO_HEIGHT);
+  gtk_widget_set_size_request(reserved_box, 0, SHORTCUT_MENU_HEIGHT);
+
+  gtk_box_pack_start(GTK_BOX(widget), logo_box, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(widget), params_box, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(widget), reserved_box, FALSE, FALSE, 0);
+
+  // LOGO
+
+  GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(get_resource_file(IMG_LOGO_FILE).c_str(), NULL);
+  GdkPixbuf* scale = gdk_pixbuf_scale_simple(pixbuf, 92, 23, GDK_INTERP_BILINEAR);
+
+  GtkWidget* img_logo = gtk_image_new_from_pixbuf(scale);
+  g_object_unref(pixbuf);
+  g_object_unref(scale);
+
+  gtk_box_pack_start(GTK_BOX(logo_box), img_logo, TRUE, TRUE, 0);
+
+  // 图像参数区
+
+  // 左侧保留区
+}
+
+// TOP中间图像信息区
+void ViewMain::initialize_top_image(GtkWidget* widget) {
+  GtkWidget* patient_box = gtk_vbox_new(FALSE, 0);
+  GtkWidget* image_box = gtk_vbox_new(FALSE, 0);
+  GtkWidget* playback_box = gtk_vbox_new(FALSE, 0);
+
+  gtk_widget_set_size_request(patient_box, 0, LOGO_HEIGHT);
+  gtk_widget_set_size_request(playback_box, 0, 50);
+
+  gtk_box_pack_start(GTK_BOX(widget), patient_box, FALSE, FALSE, 0);
+  gtk_box_pack_start(GTK_BOX(widget), image_box, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(widget), playback_box, FALSE, FALSE, 0);
+
+  // 病人信息区
+
+  GtkWidget* da_topArea = m_ptrTopArea->Create();
+  gtk_box_pack_start(GTK_BOX(patient_box), da_topArea, TRUE, TRUE, 0);
+  m_ptrTopArea->AddTimeOut();
+
+  // 图像区
+
+  GtkWidget* image_fixed = gtk_fixed_new();
+  gtk_box_pack_start(GTK_BOX(image_box), image_fixed, TRUE, TRUE, 0);
+
+  // image
+  GtkWidget* da_image = m_ptrImgArea->Create();
+  gtk_fixed_put(GTK_FIXED(image_fixed), da_image, 0, 0);
+  m_ptrImgArea->AddTimeOutFps();
+
+  // note
+  GtkWidget* canvas_note = m_ptrNoteArea->Create();
+  gtk_fixed_put(GTK_FIXED(image_fixed), canvas_note, IMAGE_X, IMAGE_Y);
+
+  // 电影回放区
+
+  GtkWidget* da_hintArea = m_ptrHintArea->Create();
+  gtk_box_pack_start(GTK_BOX(playback_box), da_hintArea, TRUE, TRUE, 0);
+}
+
+// TOP右侧菜单区
+void ViewMain::initialize_top_menu(GtkWidget* widget) {
+  GtkWidget* menu_fixed = gtk_fixed_new();
+  gtk_box_pack_start(GTK_BOX(widget), menu_fixed, TRUE, TRUE, 0);
+
+  GtkWidget *tableMenu = m_ptrMenuArea->Create();
+  gtk_fixed_put(GTK_FIXED(menu_fixed), tableMenu, 0, TOP_AREA_H);
+
+  m_daMenu = gtk_drawing_area_new();
+  gtk_widget_modify_bg(m_daMenu, GTK_STATE_NORMAL, get_bg_color());
+  gtk_drawing_area_size(GTK_DRAWING_AREA(m_daMenu), MENU_AREA_W, IMG_AREA_H + HINT_AREA_H);
+  gtk_fixed_put(GTK_FIXED(menu_fixed), m_daMenu, 0, TOP_AREA_H + 2);
+}

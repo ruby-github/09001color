@@ -15,6 +15,8 @@
 //#define EMP_360//G60
 //#define EMP_161//EMP-3000
 
+#include "config.h"
+
 ///> general define
 #ifndef FALSE
 #define FALSE 0
@@ -39,9 +41,6 @@
 #define PRINTF(fmt, args...)
 #define ASSERT
 #endif
-
-#define SCREEN_WIDTH 1024
-#define SCREEN_HEIGHT 768
 
 ///> ultrasound define
 #define IMG_W 628
