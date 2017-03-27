@@ -113,26 +113,26 @@ void MainWindow::initialize() {
 
   // 初始化视图
 
-  GtkBox* top_level_box = GTK_BOX(gtk_vbox_new(FALSE, 0));
-  gtk_container_add(GTK_CONTAINER(m_window), (GtkWidget*)top_level_box);
+  GtkBox* box_top_level = GTK_BOX(gtk_vbox_new(FALSE, 0));
+  gtk_container_add(GTK_CONTAINER(m_window), (GtkWidget*)box_top_level);
 
   // TopArea + ImageArea + MenuArea
-  GtkBox* top_image_area_box = GTK_BOX(gtk_hbox_new(FALSE, 0));
+  GtkBox* box_top_image_area = GTK_BOX(gtk_hbox_new(FALSE, 0));
   // ShortcutMenuArea
-  GtkBox* shortcut_menu_area_box = GTK_BOX(gtk_hbox_new(FALSE, 0));
+  GtkBox* box_shortcut_menu_area = GTK_BOX(gtk_hbox_new(FALSE, 0));
   // MessageArea
-  GtkBox* message_area_box = GTK_BOX(gtk_hbox_new(FALSE, 0));
+  GtkBox* box_message_area = GTK_BOX(gtk_hbox_new(FALSE, 0));
 
-  gtk_widget_set_size_request((GtkWidget*)shortcut_menu_area_box, 0, SHORTCUTMENUAREA_HEIGHT);
-  gtk_widget_set_size_request((GtkWidget*)message_area_box, 0, MESSAGEAREA_HEIGHT);
+  gtk_widget_set_size_request((GtkWidget*)box_shortcut_menu_area, 0, SHORTCUTMENUAREA_HEIGHT);
+  gtk_widget_set_size_request((GtkWidget*)box_message_area, 0, MESSAGEAREA_HEIGHT);
 
-  gtk_box_pack_start(top_level_box, (GtkWidget*)top_image_area_box, TRUE, TRUE, 0);
-  gtk_box_pack_start(top_level_box, (GtkWidget*)shortcut_menu_area_box, FALSE, FALSE, 0);
-  gtk_box_pack_start(top_level_box, (GtkWidget*)message_area_box, FALSE, FALSE, 0);
+  gtk_box_pack_start(box_top_level, (GtkWidget*)box_top_image_area, TRUE, TRUE, 0);
+  gtk_box_pack_start(box_top_level, (GtkWidget*)box_shortcut_menu_area, FALSE, FALSE, 0);
+  gtk_box_pack_start(box_top_level, (GtkWidget*)box_message_area, FALSE, FALSE, 0);
 
-  initialize_top_image(top_image_area_box);
-  initialize_shortcut_menu(shortcut_menu_area_box);
-  initialize_message_image(message_area_box);
+  initialize_top_image(box_top_image_area);
+  initialize_shortcut_menu(box_shortcut_menu_area);
+  initialize_message_image(box_message_area);
 
   show();
 }
@@ -149,35 +149,35 @@ void MainWindow::hide() {
 
 // TopArea + ImageArea + MenuArea
 void MainWindow::initialize_top_image(GtkBox* box) {
-  GtkBox* top_left_box = GTK_BOX(gtk_vbox_new(FALSE, 0));
-  GtkBox* menu_area_box = GTK_BOX(gtk_vbox_new(FALSE, 0));
+  GtkBox* box_top_image_area = GTK_BOX(gtk_vbox_new(FALSE, 0));
+  GtkBox* box_menu_area = GTK_BOX(gtk_vbox_new(FALSE, 0));
 
-  gtk_widget_set_size_request((GtkWidget*)menu_area_box, MENUAREA_WIDTH, 0);
+  gtk_widget_set_size_request((GtkWidget*)box_menu_area, MENUAREA_WIDTH, 0);
 
-  gtk_box_pack_start(box, (GtkWidget*)top_left_box, TRUE, TRUE, 0);
-  gtk_box_pack_start(box, (GtkWidget*)menu_area_box, FALSE, FALSE, 0);
+  gtk_box_pack_start(box, (GtkWidget*)box_top_image_area, TRUE, TRUE, 0);
+  gtk_box_pack_start(box, (GtkWidget*)box_menu_area, FALSE, FALSE, 0);
 
   // -------------------------------------------------------
 
-  GtkBox* top_area_box = GTK_BOX(gtk_hbox_new(FALSE, 0));
-  GtkBox* image_area_box = GTK_BOX(gtk_hbox_new(FALSE, 0));
+  GtkBox* box_top_area = GTK_BOX(gtk_hbox_new(FALSE, 0));
+  GtkBox* box_image_area = GTK_BOX(gtk_hbox_new(FALSE, 0));
 
-  gtk_widget_set_size_request((GtkWidget*)top_area_box, 0, TOPAREA_HEIGHT);
+  gtk_widget_set_size_request((GtkWidget*)box_top_area, 0, TOPAREA_HEIGHT);
 
-  gtk_box_pack_start(top_left_box, (GtkWidget*)top_area_box, FALSE, FALSE, 0);
-  gtk_box_pack_start(top_left_box, (GtkWidget*)image_area_box, TRUE, TRUE, 0);
+  gtk_box_pack_start(box_top_image_area, (GtkWidget*)box_top_area, FALSE, FALSE, 0);
+  gtk_box_pack_start(box_top_image_area, (GtkWidget*)box_image_area, TRUE, TRUE, 0);
 
   // TopArea
   m_top_area->set_size(SCREEN_WIDTH - MENUAREA_WIDTH, TOPAREA_HEIGHT);
-  m_top_area->initialize(top_area_box);
+  m_top_area->initialize(box_top_area);
 
   // ImageArea
   m_image_area->set_size(SCREEN_WIDTH - MENUAREA_WIDTH, SCREEN_HEIGHT - TOPAREA_HEIGHT - SHORTCUTMENUAREA_HEIGHT - MESSAGEAREA_HEIGHT);
-  m_image_area->initialize(image_area_box);
+  m_image_area->initialize(box_image_area);
 
   // MenuArea
   m_menu_area->set_size(MENUAREA_WIDTH, SCREEN_HEIGHT - SHORTCUTMENUAREA_HEIGHT - MESSAGEAREA_HEIGHT);
-  m_menu_area->initialize(menu_area_box);
+  m_menu_area->initialize(box_menu_area);
 }
 
 // ShortcutMenuArea

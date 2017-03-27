@@ -23,7 +23,7 @@ private:
   int m_width;
   int m_height;
 
-  GtkLabel* m_hospital;
+  GtkLabel* m_label_hospital;
 };
 
 #endif

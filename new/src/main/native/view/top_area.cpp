@@ -22,10 +22,11 @@ TopArea::TopArea() {
   m_width = 0;
   m_height = 0;
 
-  m_hospital = NULL;
+  m_label_hospital = NULL;
 }
 
 TopArea::~TopArea() {
+  m_label_hospital = NULL;
 }
 
 void TopArea::set_size(int width, int height) {
@@ -34,24 +35,24 @@ void TopArea::set_size(int width, int height) {
 }
 
 void TopArea::initialize(GtkBox* box) {
-  GtkWidget* logo_box = gtk_vbox_new(FALSE, 3);
-  GtkWidget* hospital_box = gtk_vbox_new(FALSE, 3);
-  GtkWidget* info_box = gtk_vbox_new(FALSE, 3);
-  GtkWidget* time_box = gtk_vbox_new(FALSE, 3);
+  GtkBox* box_logo = GTK_BOX(gtk_vbox_new(FALSE, 0));
+  GtkBox* box_hospital = GTK_BOX(gtk_vbox_new(FALSE, 0));
+  GtkBox* box_info = GTK_BOX(gtk_vbox_new(FALSE, 0));
+  GtkBox* box_time = GTK_BOX(gtk_vbox_new(FALSE, 0));
 
-  gtk_widget_set_size_request(logo_box, LOGO_WIDTH, 0);
-  gtk_widget_set_size_request(hospital_box, HOSPITAL_WIDTH, 0);
-  gtk_widget_set_size_request(time_box, TIME_WIDTH, 0);
+  gtk_widget_set_size_request((GtkWidget*)box_logo, LOGO_WIDTH, 0);
+  gtk_widget_set_size_request((GtkWidget*)box_hospital, HOSPITAL_WIDTH, 0);
+  gtk_widget_set_size_request((GtkWidget*)box_time, TIME_WIDTH, 0);
 
-  gtk_box_pack_start(box, logo_box, FALSE, FALSE, 0);
-  gtk_box_pack_start(box, hospital_box, FALSE, FALSE, 0);
-  gtk_box_pack_start(box, info_box, TRUE, TRUE, 0);
-  gtk_box_pack_start(box, time_box, FALSE, FALSE, 0);
+  gtk_box_pack_start(box, (GtkWidget*)box_logo, FALSE, FALSE, 0);
+  gtk_box_pack_start(box, (GtkWidget*)box_hospital, FALSE, FALSE, 0);
+  gtk_box_pack_start(box, (GtkWidget*)box_info, TRUE, TRUE, 0);
+  gtk_box_pack_start(box, (GtkWidget*)box_time, FALSE, FALSE, 0);
 
-  initialize_logo(GTK_BOX(logo_box));
-  initialize_hospital(GTK_BOX(hospital_box));
-  initialize_info(GTK_BOX(info_box));
-  initialize_time(GTK_BOX(time_box));
+  initialize_logo(box_logo);
+  initialize_hospital(box_hospital);
+  initialize_info(box_info);
+  initialize_time(box_time);
 }
 
 void TopArea::show() {
@@ -64,15 +65,15 @@ void TopArea::hide() {
 
 // LOGO
 void TopArea::initialize_logo(GtkBox* box) {
-  GtkImage* img_logo = create_image_from_file(IMAGE_LOGO_FILENAME, LOGO_WIDTH, m_height);
-  gtk_box_pack_start(box, (GtkWidget*)img_logo, TRUE, TRUE, 0);
+  GtkImage* image_logo = create_image_from_file(IMAGE_LOGO_FILENAME, LOGO_WIDTH, m_height);
+  gtk_box_pack_start(box, (GtkWidget*)image_logo, TRUE, TRUE, 0);
 }
 
 // 医院名称
 void TopArea::initialize_hospital(GtkBox* box) {
-  m_hospital = create_labe("南山医院");
+  m_label_hospital = create_labe("南山医院");
 
-  gtk_container_add(GTK_CONTAINER(box), (GtkWidget*)m_hospital);
+  gtk_container_add(GTK_CONTAINER(box), (GtkWidget*)m_label_hospital);
 }
 
 // 病人信息
