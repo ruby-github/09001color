@@ -3,6 +3,12 @@
 
 #include <gtk/gtk.h>
 
+#include "view/top_area.h"
+#include "view/image_area.h"
+#include "view/menu_area.h"
+#include "view/shortcut_menu_area.h"
+#include "view/message_area.h"
+
 class MainWindow {
 public:
   static MainWindow* instance();
@@ -16,18 +22,21 @@ public:
 private:
   MainWindow();
 
-  void initialize_top_info(GtkWidget* widget);
-  void initialize_shortcut_menu(GtkWidget* widget);
-  void initialize_status_message(GtkWidget* widget);
-
-  void initialize_top_image_param(GtkWidget* widget);
-  void initialize_top_image_info(GtkWidget* widget);
-  void initialize_top_image_menu(GtkWidget* widget);
+  void initialize_top_image(GtkBox* box);
+  void initialize_shortcut_menu(GtkBox* box);
+  void initialize_message_image(GtkBox* box);
 
 private:
   static MainWindow* m_instance;
 
   GtkWidget* m_window;
+
+  TopArea* m_top_area;
+  ImageArea* m_image_area;
+  MenuArea* m_menu_area;
+
+  ShortcutMenuArea* m_shortcut_menu_area;
+  MessageArea* m_message_area;
 };
 
 #endif

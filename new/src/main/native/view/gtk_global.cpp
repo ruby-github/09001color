@@ -69,3 +69,36 @@ const GdkColor* get_bg_color() {
 
   return g_bg_color;
 }
+
+GtkLabel* create_labe(const std::string text) {
+  GtkLabel* label = GTK_LABEL(gtk_label_new(text.c_str()));
+
+  gtk_label_set_line_wrap(label, TRUE);
+  //gtk_widget_modify_font(label, font);
+  //PangoFontDescription *font
+
+  return label;
+}
+
+GtkButton* create_button() {
+  GtkWidget* button = gtk_button_new();
+
+  return GTK_BUTTON(button);
+}
+
+GtkButton* create_button_with_label(const std::string label) {
+  GtkWidget* button = gtk_button_new_with_label(label.c_str());
+
+  return GTK_BUTTON(button);
+}
+
+GtkImage* create_image_from_file(const std::string filename, const int width, const int height) {
+  GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(get_resource_file(filename).c_str(), NULL);
+  GdkPixbuf* pixbuf_scale = gdk_pixbuf_scale_simple(pixbuf, width, height, GDK_INTERP_BILINEAR);
+
+  GtkWidget* image = gtk_image_new_from_pixbuf(pixbuf_scale);
+  g_object_unref(pixbuf_scale);
+  g_object_unref(pixbuf);
+
+  return GTK_IMAGE(image);
+}
