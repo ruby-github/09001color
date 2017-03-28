@@ -11,8 +11,6 @@ public:
 
   void set_size(int width, int height);
   void initialize(GtkBox* box);
-  void show();
-  void hide();
 
   void set_patient_info(const std::string name, const std::string sex, const unsigned int age, const std::string id);
 

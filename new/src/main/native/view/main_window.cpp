@@ -135,6 +135,11 @@ void MainWindow::initialize() {
   initialize_message_image(box_message_area);
 
   show();
+
+  //////
+  m_top_area->update_hospital_name("hospital");
+  m_top_area->set_patient_info("Jack", "male", 21, "201703270001");
+  /////
 }
 
 void MainWindow::show() {

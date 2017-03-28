@@ -15,8 +15,8 @@ using namespace std;
 // |-------------|-------------|-------------------------------------------|-------------|
 
 #define LOGO_WIDTH      130
-#define HOSPITAL_WIDTH  140
-#define TIME_WIDTH      140
+#define HOSPITAL_WIDTH  130
+#define TIME_WIDTH      130
 
 gboolean time_handler(gpointer data) {
   TopArea* top_area= (TopArea*)data;
@@ -67,18 +67,7 @@ void TopArea::initialize(GtkBox* box) {
 
   update_time();
 
-  //////
-  update_hospital_name("南山医院");
-  set_patient_info("Jack", "男", 21, "201703270001");
-  /////
-
   g_timeout_add(500, time_handler, this);
-}
-
-void TopArea::show() {
-}
-
-void TopArea::hide() {
 }
 
 void TopArea::set_patient_info(const std::string name, const std::string sex, const unsigned int age, const std::string id) {
