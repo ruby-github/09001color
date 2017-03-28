@@ -1,29 +1,28 @@
 #include "view/gtk_global.h"
 
 #include <unistd.h>
-#include <glib/gi18n.h>
-#include <gtk/gtk.h>
+
+
+#include <sstream>
+#include <string>
 
 #include "config.h"
 
 using namespace std;
+
+#define I18N_PACKAGE  "09001_lang"
+#define I18N_LOCALE   "/usr/share/locale"
 
 string g_application_path = "";
 
 GdkColor* g_color = NULL;
 GdkColor* g_bg_color = NULL;
 
-void i18n_initialize() {
+void i18n() {
   setlocale(LC_ALL, "");
-  bindtextdomain(PACKAGE_NAME, LOCALE_PATH);
-  bind_textdomain_codeset(PACKAGE_NAME, "UTF-8");
-  textdomain(PACKAGE_NAME);
-}
-
-void global_initialize() {
-}
-
-void global_free() {
+  bindtextdomain(I18N_PACKAGE, I18N_LOCALE);
+  bind_textdomain_codeset(I18N_PACKAGE, "UTF-8");
+  textdomain(I18N_PACKAGE);
 }
 
 const string get_resource_file(const string name) {
@@ -70,12 +69,33 @@ const GdkColor* get_bg_color() {
   return g_bg_color;
 }
 
+void modify_font(GtkWidget* widget, const string family, const string sytle, const unsigned int size) {
+  stringstream ss;
+
+  if (!family.empty()) {
+    ss << family << " ";
+  }
+
+  if (!sytle.empty()) {
+    ss << sytle << " ";
+  }
+
+  if (size > 0) {
+    ss << size;
+  }
+
+  PangoFontDescription* font = pango_font_description_from_string(ss.str().c_str());
+  gtk_widget_modify_font(widget, font);
+  pango_font_description_free(font);
+}
+
 GtkLabel* create_labe(const std::string text) {
   GtkLabel* label = GTK_LABEL(gtk_label_new(text.c_str()));
 
-  gtk_label_set_line_wrap(label, TRUE);
-  //gtk_widget_modify_font(label, font);
-  //PangoFontDescription *font
+  modify_font((GtkWidget*)label, "", "", 12);
+
+  gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+  gtk_widget_modify_fg((GtkWidget*)label, GTK_STATE_NORMAL, get_color("white"));
 
   return label;
 }

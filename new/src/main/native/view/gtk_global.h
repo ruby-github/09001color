@@ -1,18 +1,19 @@
 #ifndef __gtk_global_h__
 #define __gtk_global_h__
 
+#include <glib/gi18n.h>
 #include <gtk/gtk.h>
+
 #include <string>
 
-void i18n_initialize();
-
-void global_initialize();
-void global_free();
+void i18n();
 
 const std::string get_resource_file(const std::string name);
 
 const GdkColor* get_color(const std::string color_name);
 const GdkColor* get_bg_color();
+
+void modify_font(GtkWidget* widget, const std::string family, const std::string sytle, const unsigned int size);
 
 GtkLabel* create_labe(const std::string text);
 

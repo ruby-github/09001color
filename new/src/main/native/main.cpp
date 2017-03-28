@@ -6,8 +6,7 @@
 int main(int argc, char *argv[]) {
   gtk_init(&argc, &argv);
 
-  i18n_initialize();
-  global_initialize();
+  i18n();
 
   MainWindow* instance = MainWindow::instance();
   instance->initialize();
@@ -16,8 +15,6 @@ int main(int argc, char *argv[]) {
 
   delete instance;
   instance = NULL;
-
-  global_free();
 
   return 0;
 }
