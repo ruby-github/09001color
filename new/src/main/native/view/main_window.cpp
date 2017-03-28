@@ -137,8 +137,8 @@ void MainWindow::initialize() {
   show();
 
   //////
-  m_top_area->update_hospital_name("hospital");
-  m_top_area->set_patient_info("Jack", "male", 21, "201703270001");
+  m_top_area->update_hospital_name("南山医院");
+  m_top_area->set_patient_info("jack", "male", 21, "201703270001");
   /////
 }
 

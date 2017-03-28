@@ -14,6 +14,8 @@ const GdkColor* get_color(const std::string color_name);
 const GdkColor* get_bg_color();
 
 void set_font(GtkWidget* widget, const std::string family, const std::string sytle, const unsigned int size);
+void adjust_font_size(GtkWidget* widget, const std::string family, const std::string sytle,
+  const unsigned int size, const unsigned int max_width, const unsigned int max_height);
 
 GtkLabel* create_labe(const std::string text);
 

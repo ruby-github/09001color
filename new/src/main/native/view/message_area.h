@@ -10,8 +10,6 @@ public:
 
   void set_size(int width, int height);
   void initialize(GtkBox* box);
-  void show();
-  void hide();
 
 private:
 

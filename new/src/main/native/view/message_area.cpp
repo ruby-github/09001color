@@ -26,9 +26,3 @@ void MessageArea::initialize(GtkBox* box) {
 
   gtk_container_add(GTK_CONTAINER(box), button);
 }
-
-void MessageArea::show() {
-}
-
-void MessageArea::hide() {
-}

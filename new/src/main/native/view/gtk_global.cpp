@@ -70,23 +70,87 @@ const GdkColor* get_bg_color() {
 }
 
 void set_font(GtkWidget* widget, const string family, const string sytle, const unsigned int size) {
-  stringstream ss;
+  PangoFontDescription* font = NULL;
 
-  if (!family.empty()) {
-    ss << family << " ";
+  if (sytle.empty()) {
+    font = pango_font_description_new();
+  } else {
+    font = pango_font_description_from_string(sytle.c_str());
   }
 
-  if (!sytle.empty()) {
-    ss << sytle << " ";
+  if (!family.empty()) {
+    pango_font_description_set_family(font, family.c_str());
+  } else {
+    pango_font_description_set_family(font, "WenQuanYi Zen Hei");
   }
 
   if (size > 0) {
-    ss << size;
+    pango_font_description_set_size(font, size * PANGO_SCALE);
+  } else {
+    pango_font_description_set_size(font, 12 * PANGO_SCALE);
   }
 
-  PangoFontDescription* font = pango_font_description_from_string(ss.str().c_str());
   gtk_widget_modify_font(widget, font);
   pango_font_description_free(font);
+}
+
+void adjust_font_size(GtkWidget* widget, const string family, const string sytle,
+  const unsigned int size, const unsigned int max_width, const unsigned int max_height) {
+  if (size > 0) {
+    if (max_width > 0 && max_height > 0) {
+      string text;
+
+      if (GTK_IS_LABEL(widget) == TRUE) {
+        text = gtk_label_get_text(GTK_LABEL(widget));
+      } else if (GTK_IS_BUTTON(widget) == TRUE) {
+        text = gtk_button_get_label(GTK_BUTTON(widget));
+      } else {
+      }
+
+      if (!text.empty()) {
+        PangoFontDescription* font = NULL;
+
+        if (sytle.empty()) {
+          font = pango_font_description_new();
+        } else {
+          font = pango_font_description_from_string(sytle.c_str());
+        }
+
+        if (!family.empty()) {
+          pango_font_description_set_family(font, family.c_str());
+        } else {
+          pango_font_description_set_family(font, "WenQuanYi Zen Hei");
+        }
+
+        int width = 0;
+        int height = 0;
+        int font_size = size;
+
+        PangoLayout* layout = gtk_widget_create_pango_layout(widget, text.c_str());
+
+        do {
+          pango_font_description_set_size(font, font_size * PANGO_SCALE);
+
+          pango_layout_set_font_description(layout, font);
+          pango_layout_get_pixel_size(layout, &width, &height);
+
+          font_size -= 1;
+
+          if (font_size <= 0) {
+            break;
+          }
+        } while (width > max_width || height > max_height);
+
+        g_object_unref(layout);
+
+        if (font_size > 0) {
+          gtk_widget_modify_font(widget, font);
+        }
+
+        pango_font_description_free(font);
+      }
+    }
+  }
 }
 
 GtkLabel* create_labe(const std::string text) {

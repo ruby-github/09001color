@@ -97,10 +97,15 @@ void TopArea::set_check_mode(const std::string check_mode) {
   update_info();
 }
 
+#include <iostream>
+using namespace std;
+
 // 更新医院名称
 void TopArea::update_hospital_name(const std::string name) {
   if (m_label_hospital != NULL) {
     gtk_label_set_text(m_label_hospital, name.c_str());
+
+    adjust_font_size((GtkWidget*)m_label_hospital, "", "", 20, HOSPITAL_WIDTH, m_height);
   }
 }
 
@@ -193,7 +198,6 @@ void TopArea::initialize_hospital(GtkBox* box) {
   m_label_hospital = create_labe("");
   gtk_container_add(GTK_CONTAINER(box), (GtkWidget*)m_label_hospital);
 
-  set_font((GtkWidget*)m_label_hospital, "", "", 18);
   gtk_misc_set_alignment(GTK_MISC(m_label_hospital), 0.5, 0.5);
 }
 
