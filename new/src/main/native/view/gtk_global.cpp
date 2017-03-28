@@ -69,7 +69,7 @@ const GdkColor* get_bg_color() {
   return g_bg_color;
 }
 
-void modify_font(GtkWidget* widget, const string family, const string sytle, const unsigned int size) {
+void set_font(GtkWidget* widget, const string family, const string sytle, const unsigned int size) {
   stringstream ss;
 
   if (!family.empty()) {
@@ -92,7 +92,7 @@ void modify_font(GtkWidget* widget, const string family, const string sytle, con
 GtkLabel* create_labe(const std::string text) {
   GtkLabel* label = GTK_LABEL(gtk_label_new(text.c_str()));
 
-  modify_font((GtkWidget*)label, "", "", 12);
+  set_font((GtkWidget*)label, "", "", 12);
 
   gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
   gtk_widget_modify_fg((GtkWidget*)label, GTK_STATE_NORMAL, get_color("white"));

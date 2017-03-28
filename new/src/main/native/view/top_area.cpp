@@ -7,7 +7,7 @@
 
 using namespace std;
 
-//       130           140                                                       140
+//       130           130                                                       130
 // |-------------|-------------|-------------------------------------------|-------------|
 // |             |             |      病人信息(姓名, 性别, 年龄, ID)       |             |
 // |    LOGO     |  医院名称   |-------------------------------------------|  时间信息   |
@@ -193,7 +193,7 @@ void TopArea::initialize_hospital(GtkBox* box) {
   m_label_hospital = create_labe("");
   gtk_container_add(GTK_CONTAINER(box), (GtkWidget*)m_label_hospital);
 
-  modify_font((GtkWidget*)m_label_hospital, "", "", 18);
+  set_font((GtkWidget*)m_label_hospital, "", "", 18);
   gtk_misc_set_alignment(GTK_MISC(m_label_hospital), 0.5, 0.5);
 }
 
