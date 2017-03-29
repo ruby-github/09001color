@@ -1,5 +1,4 @@
 #include "view/image_area.h"
-
 #include "view/gtk_global.h"
 
 //     20                                                                   20

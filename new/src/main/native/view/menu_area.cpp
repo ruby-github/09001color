@@ -1,5 +1,4 @@
 #include "view/menu_area.h"
-
 #include "view/gtk_global.h"
 
 MenuArea::MenuArea() {

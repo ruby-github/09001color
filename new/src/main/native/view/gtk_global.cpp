@@ -1,12 +1,9 @@
 #include "view/gtk_global.h"
+#include "config.h"
 
 #include <unistd.h>
-
-
 #include <sstream>
 #include <string>
-
-#include "config.h"
 
 using namespace std;
 
@@ -176,13 +173,23 @@ GtkButton* create_button_with_label(const std::string label) {
   return GTK_BUTTON(button);
 }
 
-GtkImage* create_image_from_file(const std::string filename, const int width, const int height) {
-  GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(get_resource_file(filename).c_str(), NULL);
-  GdkPixbuf* pixbuf_scale = gdk_pixbuf_scale_simple(pixbuf, width, height, GDK_INTERP_BILINEAR);
+GtkImage* create_image(const std::string filename, const int width, const int height) {
+  GtkImage* image = NULL;
 
-  GtkWidget* image = gtk_image_new_from_pixbuf(pixbuf_scale);
-  g_object_unref(pixbuf_scale);
-  g_object_unref(pixbuf);
+  if (filename.empty()) {
+    image = GTK_IMAGE(gtk_image_new());
+  } else {
+    if (width == 0 || height == 0) {
+      image = GTK_IMAGE(gtk_image_new_from_file(get_resource_file(filename).c_str()));
+    } else {
+      GdkPixbuf* pixbuf = gdk_pixbuf_new_from_file(get_resource_file(filename).c_str(), NULL);
+      GdkPixbuf* pixbuf_scale = gdk_pixbuf_scale_simple(pixbuf, width, height, GDK_INTERP_BILINEAR);
 
-  return GTK_IMAGE(image);
+      image = GTK_IMAGE(gtk_image_new_from_pixbuf(pixbuf_scale));
+      g_object_unref(pixbuf_scale);
+      g_object_unref(pixbuf);
+    }
+  }
+
+  return image;
 }

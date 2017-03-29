@@ -1,5 +1,4 @@
 #include "view/shortcut_menu_area.h"
-
 #include "view/gtk_global.h"
 
 //       130       30      120         120         120         120         120        120      30      114

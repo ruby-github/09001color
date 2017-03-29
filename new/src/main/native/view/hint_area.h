@@ -23,6 +23,15 @@ private:
   int m_height;
 
   GtkLabel* m_label_hint;
+
+  GtkImage* m_audio;
+  GtkImage* m_charge;
+  GtkImage* m_network;
+
+  GtkImage* m_cdrom;
+  GtkImage* m_flashkey;
+  GtkImage* m_printer;
+  GtkImage* m_replay;
 };
 
 #endif

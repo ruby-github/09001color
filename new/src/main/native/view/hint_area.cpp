@@ -1,6 +1,6 @@
 #include "view/hint_area.h"
-
 #include "view/gtk_global.h"
+#include "config.h"
 
 using namespace std;
 
@@ -10,6 +10,39 @@ using namespace std;
 // |---------------------------------------------|------------|
 
 #define STATUS_WIDTH  205
+
+const string icon_network_list[2] = {
+  ICON_NETWORK_IDLE,
+  ICON_NETWORK_OFFLINE
+};
+
+const string icon_audio_list[2] = {
+  ICON_AUDIO_MUTED,
+  ICON_AUDIO_ON
+};
+
+const string icon_charge_list[7] = {
+  ICON_CHARGE_1,
+  ICON_CHARGE_2,
+  ICON_CHARGE_3,
+  ICON_CHARGE_4,
+  ICON_CHARGE_5,
+  ICON_CHARGE_6,
+  ICON_CHARGE_7
+};
+
+const string icon_scan_list[5] = {
+  ICON_SCAN_00,
+  ICON_SCAN_25,
+  ICON_SCAN_50,
+  ICON_SCAN_75,
+  ICON_SCAN_100
+};
+
+const string icon_replay  = ICON_REPLAY;
+const string icon_flashkey   = ICON_FLASHKEY;
+const string icon_cdrom      = ICON_CDROM;
+const string icon_printer = ICON_PRINTER;
 
 gboolean time_clear_handler(gpointer data) {
   HintArea* hint_area= (HintArea*)data;
@@ -64,8 +97,27 @@ void HintArea::initialize_hint(GtkBox* box) {
 
 // 系统状态
 void HintArea::initialize_status(GtkBox* box) {
-  GtkWidget* button = gtk_button_new();
-  gtk_widget_modify_bg(button, GTK_STATE_NORMAL, get_color("yellow"));
+  GtkTable* table = GTK_TABLE(gtk_table_new(1, 6, TRUE));
+  gtk_container_add(GTK_CONTAINER(box), (GtkWidget*)table);
 
-  gtk_container_add(GTK_CONTAINER(box), button);
+  m_network = create_image("", 0, 0);
+  gtk_table_attach_defaults(table, (GtkWidget*)m_network, 0, 1, 0, 1);
+
+  m_audio = create_image("", 0, 0);
+  gtk_table_attach_defaults(table, (GtkWidget*)m_audio, 1, 2, 0, 1);
+
+  m_replay = create_image("", 0, 0);
+  gtk_table_attach_defaults(table, (GtkWidget*)m_replay, 2, 3, 0, 1);
+
+  m_flashkey = create_image("", 0, 0);
+  gtk_table_attach_defaults(table, (GtkWidget*)m_flashkey, 3, 4, 0, 1);
+
+  m_cdrom = create_image("", 0, 0);
+  gtk_table_attach_defaults(table, (GtkWidget*)m_cdrom, 4, 5, 0, 1);
+
+  m_charge = create_image("", 0, 0);
+  gtk_table_attach_defaults(table, (GtkWidget*)m_charge, 5, 6, 0, 1);
+
+  //m_printer = create_image();
+  //m_replay = create_image();
 }

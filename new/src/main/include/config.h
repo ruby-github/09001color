@@ -9,7 +9,7 @@
 #define IMAGE_SHORTCUT_MENU_5 "image/shortcut_menu_5.png"
 #define IMAGE_SHORTCUT_MENU_6 "image/shortcut_menu_6.png"
 
-#define iCON_AUDIO_MUTED      "icon/audio_muted.png"
+#define ICON_AUDIO_MUTED      "icon/audio_muted.png"
 #define ICON_AUDIO_ON         "icon/audio_on.png"
 
 #define ICON_CHARGE_1         "icon/charge_1.jpg"

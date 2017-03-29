@@ -1,8 +1,6 @@
 #ifndef __main_window_h__
 #define __main_window_h__
 
-#include <gtk/gtk.h>
-
 #include "view/hint_area.h"
 #include "view/image_area.h"
 #include "view/menu_area.h"

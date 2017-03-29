@@ -1,7 +1,6 @@
 #include "view/main_window.h"
-
-#include "config.h"
 #include "view/gtk_global.h"
+#include "config.h"
 
 using namespace std;
 
