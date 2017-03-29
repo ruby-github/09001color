@@ -11,6 +11,13 @@ using namespace std;
 
 #define STATUS_WIDTH  205
 
+gboolean time_clear_handler(gpointer data) {
+  HintArea* hint_area= (HintArea*)data;
+  hint_area->update_hint("", 0);
+
+  return FALSE;
+}
+
 HintArea::HintArea() {
   m_width = 0;
   m_height = 0;
@@ -38,6 +45,13 @@ void HintArea::initialize(GtkBox* box) {
 }
 
 void HintArea::update_hint(const string hint, unsigned int timeout) {
+  if (m_label_hint != NULL) {
+    gtk_label_set_text(m_label_hint, hint.c_str());
+  }
+
+  if (timeout > 0) {
+    g_timeout_add_seconds(timeout, time_clear_handler, this);
+  }
 }
 
 // ---------------------------------------------------------

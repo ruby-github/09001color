@@ -184,7 +184,7 @@ void TopArea::update_time() {
 
 // LOGO
 void TopArea::initialize_logo(GtkBox* box) {
-  GtkImage* image_logo = create_image_from_file(IMAGE_LOGO_FILENAME, LOGO_WIDTH, m_height);
+  GtkImage* image_logo = create_image_from_file(IMAGE_LOGO, LOGO_WIDTH, m_height);
 
   gtk_misc_set_alignment(GTK_MISC(image_logo), 0.5, 0.5);
   gtk_box_pack_start(box, (GtkWidget*)image_logo, TRUE, TRUE, 0);
