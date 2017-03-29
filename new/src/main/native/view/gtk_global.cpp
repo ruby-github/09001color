@@ -152,13 +152,13 @@ void adjust_font_size(GtkWidget* widget, const string family, const string sytle
 
 void set_image(GtkImage* image, const std::string filename) {
   if (filename.empty()) {
-    gtk_image_set_from_file(image, NULL);
+    gtk_image_set_from_pixbuf(image, NULL);
   } else {
     gtk_image_set_from_file(image, get_resource_file(filename).c_str());
   }
 }
 
-GtkLabel* create_labe(const std::string text) {
+GtkLabel* create_label(const std::string text) {
   GtkLabel* label = GTK_LABEL(gtk_label_new(text.c_str()));
 
   set_font((GtkWidget*)label, "", "", 12);
@@ -169,16 +169,22 @@ GtkLabel* create_labe(const std::string text) {
   return label;
 }
 
-GtkButton* create_button() {
-  GtkWidget* button = gtk_button_new();
+GtkButton* create_button(const std::string label) {
+  GtkButton* button = NULL;
 
-  return GTK_BUTTON(button);
+  if (label.empty()) {
+    button = GTK_BUTTON(gtk_button_new());
+  } else {
+    button = GTK_BUTTON(gtk_button_new_with_label(label.c_str()));
+  }
+
+  return button;
 }
 
-GtkButton* create_button_with_label(const std::string label) {
-  GtkWidget* button = gtk_button_new_with_label(label.c_str());
+GtkNotebook* create_notebook() {
+  GtkNotebook* notebook = GTK_NOTEBOOK(gtk_notebook_new());
 
-  return GTK_BUTTON(button);
+  return notebook;
 }
 
 GtkImage* create_image(const std::string filename, const int width, const int height) {

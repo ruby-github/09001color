@@ -225,7 +225,7 @@ void HintArea::update_scan() {
 
 // 提示信息
 void HintArea::initialize_hint(GtkBox* box) {
-  m_label_hint = create_labe("");
+  m_label_hint = create_label("");
   gtk_container_add(GTK_CONTAINER(box), (GtkWidget*)m_label_hint);
 }
 
