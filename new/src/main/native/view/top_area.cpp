@@ -97,9 +97,6 @@ void TopArea::set_check_mode(const std::string check_mode) {
   update_info();
 }
 
-#include <iostream>
-using namespace std;
-
 // 更新医院名称
 void TopArea::update_hospital_name(const std::string name) {
   if (m_label_hospital != NULL) {

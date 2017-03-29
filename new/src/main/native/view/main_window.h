@@ -3,11 +3,11 @@
 
 #include <gtk/gtk.h>
 
-#include "view/top_area.h"
+#include "view/hint_area.h"
 #include "view/image_area.h"
 #include "view/menu_area.h"
 #include "view/shortcut_menu_area.h"
-#include "view/message_area.h"
+#include "view/top_area.h"
 
 class MainWindow {
 public:
@@ -24,7 +24,7 @@ private:
 
   void initialize_top_image(GtkBox* box);
   void initialize_shortcut_menu(GtkBox* box);
-  void initialize_message_image(GtkBox* box);
+  void initialize_hint_image(GtkBox* box);
 
 private:
   static MainWindow* m_instance;
@@ -36,7 +36,7 @@ private:
   MenuArea* m_menu_area;
 
   ShortcutMenuArea* m_shortcut_menu_area;
-  MessageArea* m_message_area;
+  HintArea* m_hint_area;
 };
 
 #endif
