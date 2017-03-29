@@ -17,6 +17,8 @@ void set_font(GtkWidget* widget, const std::string family, const std::string syt
 void adjust_font_size(GtkWidget* widget, const std::string family, const std::string sytle,
   const unsigned int size, const unsigned int max_width, const unsigned int max_height);
 
+void set_image(GtkImage* image, const std::string filename);
+
 GtkLabel* create_labe(const std::string text);
 
 GtkButton* create_button();

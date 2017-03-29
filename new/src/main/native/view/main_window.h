@@ -24,6 +24,8 @@ private:
   void initialize_shortcut_menu(GtkBox* box);
   void initialize_hint_image(GtkBox* box);
 
+  void test();
+
 private:
   static MainWindow* m_instance;
 

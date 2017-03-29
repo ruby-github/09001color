@@ -135,10 +135,7 @@ void MainWindow::initialize() {
 
   show();
 
-  //////
-  m_top_area->update_hospital_name("南山医院");
-  m_top_area->set_patient_info("jack", "male", 21, "201703270001");
-  /////
+  test();
 }
 
 void MainWindow::show() {
@@ -194,4 +191,12 @@ void MainWindow::initialize_shortcut_menu(GtkBox* box) {
 void MainWindow::initialize_hint_image(GtkBox* box) {
   m_hint_area->set_size(SCREEN_WIDTH, HINTAREA_HEIGHT);
   m_hint_area->initialize(box);
+}
+
+void MainWindow::test() {
+  m_top_area->update_hospital_name("南山医院");
+  m_top_area->set_patient_info("jack", "male", 21, "201703270001");
+
+  //m_hint_area->update_flashkey(true);
+  //m_hint_area->update_cdrom(true);
 }

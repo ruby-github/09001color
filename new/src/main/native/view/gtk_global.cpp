@@ -150,6 +150,14 @@ void adjust_font_size(GtkWidget* widget, const string family, const string sytle
   }
 }
 
+void set_image(GtkImage* image, const std::string filename) {
+  if (filename.empty()) {
+    gtk_image_set_from_file(image, NULL);
+  } else {
+    gtk_image_set_from_file(image, get_resource_file(filename).c_str());
+  }
+}
+
 GtkLabel* create_labe(const std::string text) {
   GtkLabel* label = GTK_LABEL(gtk_label_new(text.c_str()));
 
