@@ -184,6 +184,9 @@ GtkButton* create_button(const std::string label) {
 GtkNotebook* create_notebook() {
   GtkNotebook* notebook = GTK_NOTEBOOK(gtk_notebook_new());
 
+  gtk_notebook_set_scrollable(notebook, TRUE);
+  gtk_container_set_border_width (GTK_CONTAINER(notebook), 0);
+
   return notebook;
 }
 
