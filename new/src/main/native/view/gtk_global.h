@@ -21,6 +21,7 @@ void set_image(GtkImage* image, const std::string filename);
 
 GtkLabel* create_label(const std::string text);
 GtkButton* create_button(const std::string label);
+GtkButton* create_button_with_image(const std::string filename, const int width, const int height);
 GtkNotebook* create_notebook();
 
 GtkImage* create_image(const std::string filename, const int width, const int height);

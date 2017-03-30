@@ -108,7 +108,8 @@ void MainWindow::initialize() {
   gtk_container_set_border_width(GTK_CONTAINER(m_window), 0);
   gtk_widget_modify_bg(m_window, GTK_STATE_NORMAL, get_bg_color());
 
-  g_signal_connect(GTK_OBJECT(m_window), "destroy", G_CALLBACK(gtk_main_quit), NULL);
+  g_signal_connect(G_OBJECT(m_window), "destroy", G_CALLBACK(gtk_main_quit), NULL);
+  g_signal_connect(G_OBJECT(m_window), "delete_event", G_CALLBACK(gtk_main_quit), NULL);
 
   // 初始化视图
 
