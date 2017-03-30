@@ -40,48 +40,26 @@ public:
     MENU_BIOPSY,
     MENU_BIOPSYBRACKET,
     MENU_BIOPSYVERIFY,
-    MENU_SYSTEM,
-    MENU_EFOV
+    MENU_EFOV_PREPARE,
+    MENU_EFOV_CAPTURE,
+    MENU_EFOV_VIEW,
+    MENU_EFOV_REVIEW,
+    MENU_SYSTEM
   };
 
   void set_size(int width, int height);
   void initialize(GtkBox* box);
 
-  void show_menu(void);
-  void hide_all_menu(void);
-
-  void show_menu_2d(void);
-  void show_menu_m(void);
-  void show_menu_pw(void);
-  void show_menu_cw(void);
-  void show_menu_cfm(void);
-  void show_menu_pwcfm(bool current);
-  void show_menu_cwcfm(bool current);
-
-  void show_menu_measure2d(void);
-  void show_menu_calc(void);
-  void show_menu_note(void);
-  void show_menu_bodymark(void);
-  void show_menu_review(void);
-  void show_menu_biopsy(void);
-  void show_menu_biopsybracket(void);
-  void show_menu_biopsyverify(void);
-  void show_menu_system(void);
-
-  void show_menu_efov_prepare(void);
-  void show_menu_efov_capture(void);
-  void show_menu_efov_view(void);
-  void show_menu_efov_review(void);
+  void show_menu(EnumMenuType menu_type);
+  void notebook_changed(unsigned int page_num);
 
 private:
-  void initialize_notebook_menu();
-  void initialize_fixed_menu();
+  void initialize_notebook();
+  void update_label(EnumMenuType menu_type);
 
 private:
   int m_width;
   int m_height;
-
-  EnumMenuType m_menu_type;
 
   GtkLabel* m_label;
   GtkNotebook* m_notebook;

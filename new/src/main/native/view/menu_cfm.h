@@ -1,13 +1,13 @@
-#ifndef __notebook_menu_cfm_h__
-#define __notebook_menu_cfm_h__
+#ifndef __menu_cfm_h__
+#define __menu_cfm_h__
 
 #include <gtk/gtk.h>
 #include <string>
 
-class NotebookMenuCFM {
+class MenuCFM {
 public:
-  NotebookMenuCFM();
-  ~NotebookMenuCFM();
+  MenuCFM();
+  ~MenuCFM();
 
   void set_size(int width, int height);
   void initialize(GtkBox* box);

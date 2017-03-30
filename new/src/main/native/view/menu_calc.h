@@ -1,13 +1,13 @@
-#ifndef __notebook_menu_2d_h__
-#define __notebook_menu_2d_h__
+#ifndef __menu_calc_h__
+#define __menu_calc_h__
 
 #include <gtk/gtk.h>
 #include <string>
 
-class NotebookMenu2D {
+class MenuCalc {
 public:
-  NotebookMenu2D();
-  ~NotebookMenu2D();
+  MenuCalc();
+  ~MenuCalc();
 
   void set_size(int width, int height);
   void initialize(GtkBox* box);

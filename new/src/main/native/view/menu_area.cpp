@@ -22,133 +22,127 @@
 #define LABEL_HEIGHT  60
 
 void signal_notebook_changed(GtkNotebook* notebook, GtkNotebookPage* page, guint page_num, gpointer* data) {
+  MenuArea* menu_area = (MenuArea*)data;
+  menu_area->notebook_changed(page_num);
 }
 
 MenuArea::MenuArea() {
   m_width = 0;
   m_height = 0;
 
-  m_box_label = NULL;
-  m_box_menu = NULL;
-
   m_label = NULL;
-  m_fixed_menu = NULL;
   m_notebook = NULL;
 
-  m_notebook_menu_2d = new NotebookMenu2D();
-  m_notebook_menu_m = new NotebookMenuM();
-  m_notebook_menu_pw = new NotebookMenuPW();
-  m_notebook_menu_cw = new NotebookMenuCW();
-  m_notebook_menu_cfm = new NotebookMenuCFM();
+  m_menu_2d = new Menu2D();
+  m_menu_m = new MenuM();
+  m_menu_pw = new MenuPW();
+  m_menu_cw = new MenuCW();
+  m_menu_cfm = new MenuCFM();
 
-  m_fixed_menu_measure2d = new FixedMenuMeasure2D();
-  m_fixed_menu_calc = new FixedMenuCalc();
-  m_fixed_menu_note = new FixedMenuNote();
-  m_fixed_menu_bodymark = new FixedMenuBodyMark();
-  m_fixed_menu_review = new FixedMenuReview();
-  m_fixed_menu_biopsy = new FixedMenuBiopsy();
-  m_fixed_menu_biopsybracket = new FixedMenuBiopsyBracket();
-  m_fixed_menu_biopsyverify = new FixedMenuBiopsyVerify();
-  m_fixed_menu_system = new FixedMenuSystem();
-  m_fixed_menu_efov = new FixedMenuEFOV();
+  m_menu_measure2d = new MenuMeasure2D();
+  m_menu_calc = new MenuCalc();
+  m_menu_note = new MenuNote();
+  m_menu_bodymark = new MenuBodyMark();
+  m_menu_review = new MenuReview();
+  m_menu_biopsy = new MenuBiopsy();
+  m_menu_biopsybracket = new MenuBiopsyBracket();
+  m_menu_biopsyverify = new MenuBiopsyVerify();
+  m_menu_system = new MenuSystem();
+  m_menu_efov = new MenuEFOV();
 }
 
 MenuArea::~MenuArea() {
-  m_box_label = NULL;
-  m_box_menu = NULL;
-
   m_label = NULL;
-  m_fixed_menu = NULL;
   m_notebook = NULL;
 
-  if (m_notebook_menu_2d != NULL) {
-    delete m_notebook_menu_2d;
+  if (m_menu_2d != NULL) {
+    delete m_menu_2d;
 
-    m_notebook_menu_2d = NULL;
+    m_menu_2d = NULL;
   }
 
-  if (m_notebook_menu_m != NULL) {
-    delete m_notebook_menu_m;
+  if (m_menu_m != NULL) {
+    delete m_menu_m;
 
-    m_notebook_menu_m = NULL;
+    m_menu_m = NULL;
   }
 
-  if (m_notebook_menu_pw != NULL) {
-    delete m_notebook_menu_pw;
+  if (m_menu_pw != NULL) {
+    delete m_menu_pw;
 
-    m_notebook_menu_pw = NULL;
+    m_menu_pw = NULL;
   }
 
-  if (m_notebook_menu_cw != NULL) {
-    delete m_notebook_menu_cw;
+  if (m_menu_cw != NULL) {
+    delete m_menu_cw;
 
-    m_notebook_menu_cw = NULL;
+    m_menu_cw = NULL;
   }
 
-  if (m_notebook_menu_cfm != NULL) {
-    delete m_notebook_menu_cfm;
+  if (m_menu_cfm != NULL) {
+    delete m_menu_cfm;
 
-    m_notebook_menu_cfm = NULL;
+    m_menu_cfm = NULL;
   }
 
-  if (m_fixed_menu_measure2d != NULL) {
-    delete m_fixed_menu_measure2d;
+  if (m_menu_measure2d != NULL) {
+    delete m_menu_measure2d;
 
-    m_fixed_menu_measure2d = NULL;
+    m_menu_measure2d = NULL;
   }
 
-  if (m_fixed_menu_calc != NULL) {
-    delete m_fixed_menu_calc;
+  if (m_menu_calc != NULL) {
+    delete m_menu_calc;
 
-    m_fixed_menu_calc = NULL;
+    m_menu_calc = NULL;
   }
 
-  if (m_fixed_menu_note != NULL) {
-    delete m_fixed_menu_note;
+  if (m_menu_note != NULL) {
+    delete m_menu_note;
 
-    m_fixed_menu_note = NULL;
+    m_menu_note = NULL;
   }
 
-  if (m_fixed_menu_bodymark != NULL) {
-    delete m_fixed_menu_bodymark;
+  if (m_menu_bodymark != NULL) {
+    delete m_menu_bodymark;
 
-    m_fixed_menu_bodymark = NULL;
+    m_menu_bodymark = NULL;
   }
 
-  if (m_fixed_menu_review != NULL) {
-    delete m_fixed_menu_review;
+  if (m_menu_review != NULL) {
+    delete m_menu_review;
 
-    m_fixed_menu_review = NULL;
+    m_menu_review = NULL;
   }
 
-  if (m_fixed_menu_biopsy != NULL) {
-    delete m_fixed_menu_biopsy;
+  if (m_menu_biopsy != NULL) {
+    delete m_menu_biopsy;
 
-    m_fixed_menu_biopsy = NULL;
+    m_menu_biopsy = NULL;
   }
 
-  if (m_fixed_menu_biopsybracket != NULL) {
-    delete m_fixed_menu_biopsybracket;
+  if (m_menu_biopsybracket != NULL) {
+    delete m_menu_biopsybracket;
 
-    m_fixed_menu_biopsybracket = NULL;
+    m_menu_biopsybracket = NULL;
   }
 
-  if (m_fixed_menu_biopsyverify != NULL) {
-    delete m_fixed_menu_biopsyverify;
+  if (m_menu_biopsyverify != NULL) {
+    delete m_menu_biopsyverify;
 
-    m_fixed_menu_biopsyverify = NULL;
+    m_menu_biopsyverify = NULL;
   }
 
-  if (m_fixed_menu_system != NULL) {
-    delete m_fixed_menu_system;
+  if (m_menu_system != NULL) {
+    delete m_menu_system;
 
-    m_fixed_menu_system = NULL;
+    m_menu_system = NULL;
   }
 
-  if (m_fixed_menu_efov != NULL) {
-    delete m_fixed_menu_review;
+  if (m_menu_efov != NULL) {
+    delete m_menu_review;
 
-    m_fixed_menu_efov = NULL;
+    m_menu_efov = NULL;
   }
 }
 
@@ -160,13 +154,15 @@ void MenuArea::set_size(int width, int height) {
 void MenuArea::initialize(GtkBox* box) {
   // label
   m_label = create_label("Sub Menu");
-  set_font((GtkWidget*)m_label, "WenQuanYi Zen Hei", "", 16);
+  set_font((GtkWidget*)m_label, "WenQuanYi Zen Hei", "", 14);
   gtk_misc_set_alignment(GTK_MISC(m_label), 0.5, 0.5);
 
   // notebook
   m_notebook = create_notebook();
   gtk_widget_modify_bg((GtkWidget*)m_notebook, GTK_STATE_NORMAL, get_bg_color());
   g_signal_connect(G_OBJECT(m_notebook), "switch-page", G_CALLBACK(signal_notebook_changed), this);
+
+  //gtk_notebook_set_show_tabs(m_notebook, FALSE);
 
   gtk_widget_set_size_request((GtkWidget*)m_label, 0, LABEL_HEIGHT);
 
@@ -175,101 +171,252 @@ void MenuArea::initialize(GtkBox* box) {
 
   initialize_notebook();
 
-  show_menu_2d();
+  show_menu(MENU_2D);
 }
 
-void MenuArea::show_menu(void) {
-}
-
-void MenuArea::hide_all_menu(void) {
-  // m_notebook_menu_2d->hide();
-  // m_notebook_menu_m->hide();
-  // m_notebook_menu_pw->hide();
-  // m_notebook_menu_cw->hide();
-  // m_notebook_menu_cfm->hide();
-
-  if (m_notebook != NULL) {
-    gtk_widget_hide_all((GtkWidget*)m_notebook);
+void MenuArea::show_menu(EnumMenuType menu_type) {
+  if (m_notebook == NULL) {
+    return;
   }
 
-  // m_fixed_menu_measure2d->hide();
-  // m_fixed_menu_calc->hide();
-  // m_fixed_menu_note->hide();
-  // m_fixed_menu_bodymark->hide();
-  // m_fixed_menu_review->hide();
-  // m_fixed_menu_biopsy->hide();
-  // m_fixed_menu_biopsybracket->hide();
-  // m_fixed_menu_biopsyverify->hide();
-  // m_fixed_menu_system->hide();
-  // m_fixed_menu_efov->hide();
+  switch (menu_type) {
+  case MENU_2D:
+    {
+      gtk_notebook_set_current_page(m_notebook, 0);
+
+      break;
+    }
+  case MENU_M:
+    {
+      gtk_notebook_set_current_page(m_notebook, 1);
+
+      break;
+    }
+  case MENU_PW:
+    {
+      gtk_notebook_set_current_page(m_notebook, 2);
+
+      break;
+    }
+  case MENU_CW:
+    {
+      gtk_notebook_set_current_page(m_notebook, 3);
+
+      break;
+    }
+  case MENU_CFM:
+    {
+      gtk_notebook_set_current_page(m_notebook, 4);
+
+      break;
+    }
+  case MENU_PDI:
+    {
+      gtk_notebook_set_current_page(m_notebook, 4);
+
+      break;
+    }
+  case MENU_PWCFM:
+    {
+      gtk_notebook_set_current_page(m_notebook, 4);
+      gtk_label_set_text(m_label, _("PW Color Mode"));
+
+      break;
+    }
+  case MENU_CWCFM:
+    {
+      gtk_notebook_set_current_page(m_notebook, 4);
+
+      break;
+    }
+  case MENU_MEASURE2D:
+    {
+      gtk_notebook_set_current_page(m_notebook, 5);
+
+      break;
+    }
+  case MENU_CALC:
+    {
+      gtk_notebook_set_current_page(m_notebook, 6);
+
+      break;
+    }
+  case MENU_NOTE:
+    {
+      gtk_notebook_set_current_page(m_notebook, 7);
+
+      break;
+    }
+  case MENU_BODYMARK:
+    {
+      gtk_notebook_set_current_page(m_notebook, 8);
+
+      break;
+    }
+  case MENU_REVIEW:
+    {
+      gtk_notebook_set_current_page(m_notebook, 9);
+
+      break;
+    }
+  case MENU_BIOPSY:
+    {
+      gtk_notebook_set_current_page(m_notebook, 10);
+
+      break;
+    }
+  case MENU_BIOPSYBRACKET:
+    {
+      gtk_notebook_set_current_page(m_notebook, 11);
+
+      break;
+    }
+  case MENU_BIOPSYVERIFY:
+    {
+      gtk_notebook_set_current_page(m_notebook, 12);
+
+      break;
+    }
+  case MENU_EFOV_PREPARE:
+    {
+      gtk_notebook_set_current_page(m_notebook, 13);
+
+      break;
+    }
+  case MENU_EFOV_CAPTURE:
+    {
+      gtk_notebook_set_current_page(m_notebook, 13);
+
+      break;
+    }
+  case MENU_EFOV_VIEW:
+    {
+      gtk_notebook_set_current_page(m_notebook, 13);
+
+      break;
+    }
+  case MENU_EFOV_REVIEW:
+    {
+      gtk_notebook_set_current_page(m_notebook, 13);
+
+      break;
+    }
+  case MENU_SYSTEM:
+    {
+      gtk_notebook_set_current_page(m_notebook, 14);
+
+      break;
+    }
+  default:
+    {
+      gtk_label_set_text(m_label, "");
+
+      break;
+    }
+  }
+
+  update_label(menu_type);
 }
 
-void MenuArea::show_menu_2d(void) {
-  m_menu_type = MENU_2D;
+void MenuArea::notebook_changed(unsigned int page_num) {
+  EnumMenuType menu_type = MENU_2D;
 
-  hide_all_menu();
+  switch (page_num) {
+  case 0:
+    {
+      menu_type = MENU_2D;
 
-  gtk_label_set_text(m_label, _("2D Mode"));
-  gtk_notebook_set_show_tabs(m_notebook, TRUE);
+      break;
+    }
+  case 1:
+    {
+      menu_type = MENU_M;
 
-  //m_notebook_menu_2d->show();
-}
+      break;
+    }
+  case 2:
+    {
+      menu_type = MENU_PW;
 
-void MenuArea::show_menu_m(void) {
-}
+      break;
+    }
+  case 3:
+    {
+      menu_type = MENU_CW;
 
-void MenuArea::show_menu_pw(void) {
-}
+      break;
+    }
+  case 4:
+    {
+      menu_type = MENU_CFM;
 
-void MenuArea::show_menu_cw(void) {
-}
+      break;
+    }
+  case 5:
+    {
+      menu_type = MENU_MEASURE2D;
 
-void MenuArea::show_menu_cfm(void) {
-}
+      break;
+    }
+  case 6:
+    {
+      menu_type = MENU_CALC;
 
-void MenuArea::show_menu_pwcfm(bool current) {
-}
+      break;
+    }
+  case 7:
+    {
+      menu_type = MENU_NOTE;
 
-void MenuArea::show_menu_cwcfm(bool current) {
-}
+      break;
+    }
+  case 8:
+    {
+      menu_type = MENU_BODYMARK;
 
-void MenuArea::show_menu_measure2d(void) {
-}
+      break;
+    }
+  case 9:
+    {
+      menu_type = MENU_REVIEW;
 
-void MenuArea::show_menu_calc(void) {
-}
+      break;
+    }
+  case 10:
+    {
+      menu_type = MENU_BIOPSY;
 
-void MenuArea::show_menu_note(void) {
-}
+      break;
+    }
+  case 11:
+    {
+      menu_type = MENU_BIOPSYBRACKET;
 
-void MenuArea::show_menu_bodymark(void) {
-}
+      break;
+    }
+  case 12:
+    {
+      menu_type = MENU_BIOPSYVERIFY;
 
-void MenuArea::show_menu_review(void) {
-}
+      break;
+    }
+  case 13:
+    {
+      menu_type = MENU_EFOV_VIEW;
 
-void MenuArea::show_menu_biopsy(void) {
-}
+      break;
+    }
+  case 14:
+    {
+      menu_type = MENU_SYSTEM;
 
-void MenuArea::show_menu_biopsybracket(void) {
-}
+      break;
+    }
+  default:
+    break;
+  }
 
-void MenuArea::show_menu_biopsyverify(void) {
-}
-
-void MenuArea::show_menu_system(void) {
-}
-
-void MenuArea::show_menu_efov_prepare(void) {
-}
-
-void MenuArea::show_menu_efov_capture(void) {
-}
-
-void MenuArea::show_menu_efov_view(void) {
-}
-
-void MenuArea::show_menu_efov_review(void) {
+  update_label(menu_type);
 }
 
 // ---------------------------------------------------------
@@ -315,71 +462,210 @@ void MenuArea::initialize_notebook() {
 
   // measure2d menu
   GtkBox* box_menu_measure2d = GTK_BOX(gtk_vbox_new(FALSE, 0));
-  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_measure2d, (GtkWidget*)create_label(_("")));
+  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_measure2d, (GtkWidget*)create_label(_("MEASURE2D")));
 
   m_menu_measure2d->set_size(max_width, max_height);
   m_menu_measure2d->initialize(box_menu_measure2d);
 
   // calc menu
   GtkBox* box_menu_calc = GTK_BOX(gtk_vbox_new(FALSE, 0));
-  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_calc, (GtkWidget*)create_label(_("")));
+  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_calc, (GtkWidget*)create_label(_("CALC")));
 
   m_menu_calc->set_size(max_width, max_height);
   m_menu_calc->initialize(box_menu_calc);
 
   // note menu
   GtkBox* box_menu_note = GTK_BOX(gtk_vbox_new(FALSE, 0));
-  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_note, (GtkWidget*)create_label(_("")));
+  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_note, (GtkWidget*)create_label(_("NOTE")));
 
   m_menu_note->set_size(max_width, max_height);
   m_menu_note->initialize(box_menu_note);
 
   // bodymark menu
   GtkBox* box_menu_bodymark = GTK_BOX(gtk_vbox_new(FALSE, 0));
-  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_bodymark, (GtkWidget*)create_label(_("")));
+  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_bodymark, (GtkWidget*)create_label(_("BODYMARK")));
 
   m_menu_bodymark->set_size(max_width, max_height);
   m_menu_bodymark->initialize(box_menu_bodymark);
 
   // review menu
   GtkBox* box_menu_review = GTK_BOX(gtk_vbox_new(FALSE, 0));
-  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_review, (GtkWidget*)create_label(_("")));
+  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_review, (GtkWidget*)create_label(_("REVIEW")));
 
   m_menu_review->set_size(max_width, max_height);
   m_menu_review->initialize(box_menu_review);
 
   // biopsy menu
   GtkBox* box_menu_biopsy = GTK_BOX(gtk_vbox_new(FALSE, 0));
-  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_biopsy, (GtkWidget*)create_label(_("")));
+  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_biopsy, (GtkWidget*)create_label(_("BIOPSY")));
 
   m_menu_biopsy->set_size(max_width, max_height);
   m_menu_biopsy->initialize(box_menu_biopsy);
 
   // biopsy bracket menu
   GtkBox* box_menu_biopsybracket = GTK_BOX(gtk_vbox_new(FALSE, 0));
-  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_biopsybracket, (GtkWidget*)create_label(_("")));
+  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_biopsybracket, (GtkWidget*)create_label(_("BIOPSYBRACKET")));
 
   m_menu_biopsybracket->set_size(max_width, max_height);
   m_menu_biopsybracket->initialize(box_menu_biopsybracket);
 
   // biopsy verify menu
   GtkBox* box_menu_biopsyverify = GTK_BOX(gtk_vbox_new(FALSE, 0));
-  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_biopsyverify, (GtkWidget*)create_label(_("")));
+  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_biopsyverify, (GtkWidget*)create_label(_("BIOPSYVERIFY")));
 
   m_menu_biopsyverify->set_size(max_width, max_height);
   m_menu_biopsyverify->initialize(box_menu_biopsyverify);
 
-  // system menu
-  GtkBox* box_menu_system = GTK_BOX(gtk_vbox_new(FALSE, 0));
-  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_system, (GtkWidget*)create_label(_("")));
-
-  m_menu_system->set_size(max_width, max_height);
-  m_menu_system->initialize(box_menu_system);
-
   // efov
   GtkBox* box_menu_efov = GTK_BOX(gtk_vbox_new(FALSE, 0));
-  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_efov, (GtkWidget*)create_label(_("")));
+  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_efov, (GtkWidget*)create_label(_("EFOV")));
 
   m_menu_efov->set_size(max_width, max_height);
   m_menu_efov->initialize(box_menu_efov);
+
+  // system menu
+  GtkBox* box_menu_system = GTK_BOX(gtk_vbox_new(FALSE, 0));
+  gtk_notebook_append_page(m_notebook, (GtkWidget*)box_menu_system, (GtkWidget*)create_label(_("SYSTEM")));
+
+  m_menu_system->set_size(max_width, max_height);
+  m_menu_system->initialize(box_menu_system);
+}
+
+void MenuArea::update_label(EnumMenuType menu_type) {
+  switch (menu_type) {
+  case MENU_2D:
+    {
+      gtk_label_set_text(m_label, _("2D Mode"));
+
+      break;
+    }
+  case MENU_M:
+    {
+      gtk_label_set_text(m_label, _("M Mode"));
+
+      break;
+    }
+  case MENU_PW:
+    {
+      gtk_label_set_text(m_label, _("PW Mode"));
+
+      break;
+    }
+  case MENU_CW:
+    {
+      gtk_label_set_text(m_label, _("CW Mode"));
+
+      break;
+    }
+  case MENU_CFM:
+    {
+      gtk_label_set_text(m_label, _("Color Mode"));
+
+      break;
+    }
+  case MENU_PDI:
+    {
+      gtk_label_set_text(m_label, _("Color Mode"));
+
+      break;
+    }
+  case MENU_PWCFM:
+    {
+      gtk_label_set_text(m_label, _("PW Color Mode"));
+
+      break;
+    }
+  case MENU_CWCFM:
+    {
+      gtk_label_set_text(m_label, _("CW Color Mode"));
+
+      break;
+    }
+  case MENU_MEASURE2D:
+    {
+      gtk_label_set_text(m_label, _("Measure"));
+
+      break;
+    }
+  case MENU_CALC:
+    {
+      gtk_label_set_text(m_label, _("Calculate"));
+
+      break;
+    }
+  case MENU_NOTE:
+    {
+      gtk_label_set_text(m_label, _("Note"));
+
+      break;
+    }
+  case MENU_BODYMARK:
+    {
+      gtk_label_set_text(m_label, _("BodyMark"));
+
+      break;
+    }
+  case MENU_REVIEW:
+    {
+      gtk_label_set_text(m_label, _("Review"));
+
+      break;
+    }
+  case MENU_BIOPSY:
+    {
+      gtk_label_set_text(m_label, _("Biopsy"));
+
+      break;
+    }
+  case MENU_BIOPSYBRACKET:
+    {
+      gtk_label_set_text(m_label, _("Biopsy Bracket"));
+
+      break;
+    }
+  case MENU_BIOPSYVERIFY:
+    {
+      gtk_label_set_text(m_label, _("Verify"));
+
+      break;
+    }
+  case MENU_EFOV_PREPARE:
+    {
+      gtk_label_set_text(m_label, _("eView Mode\nPrepare Status"));
+
+      break;
+    }
+  case MENU_EFOV_CAPTURE:
+    {
+      gtk_label_set_text(m_label, _("eView Mode\nCapture Status"));
+
+      break;
+    }
+  case MENU_EFOV_VIEW:
+    {
+      gtk_label_set_text(m_label, _("eView Mode\nView Status"));
+
+      break;
+    }
+  case MENU_EFOV_REVIEW:
+    {
+      gtk_label_set_text(m_label, _("eView Mode\nReview Status"));
+
+      break;
+    }
+  case MENU_SYSTEM:
+    {
+      gtk_label_set_text(m_label, _("System Setting"));
+
+      break;
+    }
+  default:
+    {
+      gtk_label_set_text(m_label, "");
+
+      break;
+    }
+  }
+
+  adjust_font_size((GtkWidget*)m_label, "WenQuanYi Zen Hei", "", 14, m_width, LABEL_HEIGHT);
 }

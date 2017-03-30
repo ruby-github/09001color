@@ -1,13 +1,13 @@
-#ifndef __notebook_menu_pw_h__
-#define __notebook_menu_pw_h__
+#ifndef __menu_bodymark_h__
+#define __menu_bodymark_h__
 
 #include <gtk/gtk.h>
 #include <string>
 
-class NotebookMenuPW {
+class MenuBodyMark {
 public:
-  NotebookMenuPW();
-  ~NotebookMenuPW();
+  MenuBodyMark();
+  ~MenuBodyMark();
 
   void set_size(int width, int height);
   void initialize(GtkBox* box);
