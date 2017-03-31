@@ -1,4 +1,4 @@
-#include "module/battery.h"
+#include "device/battery.h"
 
 #define BATTERY_ADDR 0x0b
 #define BATTERY_CHARGE 0x0d

@@ -2,7 +2,7 @@
 #include "window/gtk_global.h"
 #include "config.h"
 
-#include "module/battery.h"
+#include "device/battery.h"
 
 using namespace std;
 
