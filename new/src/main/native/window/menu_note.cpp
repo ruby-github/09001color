@@ -1,5 +1,5 @@
-#include "view/menu_note.h"
-#include "view/gtk_global.h"
+#include "window/menu_note.h"
+#include "window/gtk_global.h"
 
 using namespace std;
 

@@ -1,5 +1,5 @@
-#include "view/hint_area.h"
-#include "view/gtk_global.h"
+#include "window/hint_area.h"
+#include "window/gtk_global.h"
 #include "config.h"
 
 #include "module/battery.h"

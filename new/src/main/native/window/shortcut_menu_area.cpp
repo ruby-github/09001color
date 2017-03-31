@@ -1,5 +1,5 @@
-#include "view/shortcut_menu_area.h"
-#include "view/gtk_global.h"
+#include "window/shortcut_menu_area.h"
+#include "window/gtk_global.h"
 #include "config.h"
 
 //       120       32      120         120         120         120         120        120      32      120

@@ -1,5 +1,5 @@
-#include "view/menu_area.h"
-#include "view/gtk_global.h"
+#include "window/menu_area.h"
+#include "window/gtk_global.h"
 
 // ---   |---------------|
 //  |    |               |

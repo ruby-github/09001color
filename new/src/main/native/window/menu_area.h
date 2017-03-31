@@ -1,21 +1,21 @@
 #ifndef __menu_area_h__
 #define __menu_area_h__
 
-#include "view/menu_2d.h"
-#include "view/menu_m.h"
-#include "view/menu_pw.h"
-#include "view/menu_cw.h"
-#include "view/menu_cfm.h"
-#include "view/menu_measure2d.h"
-#include "view/menu_calc.h"
-#include "view/menu_note.h"
-#include "view/menu_bodymark.h"
-#include "view/menu_review.h"
-#include "view/menu_biopsy.h"
-#include "view/menu_biopsybracket.h"
-#include "view/menu_biopsyverify.h"
-#include "view/menu_system.h"
-#include "view/menu_efov.h"
+#include "window/menu_2d.h"
+#include "window/menu_m.h"
+#include "window/menu_pw.h"
+#include "window/menu_cw.h"
+#include "window/menu_cfm.h"
+#include "window/menu_measure2d.h"
+#include "window/menu_calc.h"
+#include "window/menu_note.h"
+#include "window/menu_bodymark.h"
+#include "window/menu_review.h"
+#include "window/menu_biopsy.h"
+#include "window/menu_biopsybracket.h"
+#include "window/menu_biopsyverify.h"
+#include "window/menu_system.h"
+#include "window/menu_efov.h"
 
 class MenuArea {
 public:

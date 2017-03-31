@@ -1,4 +1,4 @@
-#include "view/gtk_global.h"
+#include "window/gtk_global.h"
 #include "config.h"
 
 #include <unistd.h>

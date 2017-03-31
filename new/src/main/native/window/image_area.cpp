@@ -1,5 +1,5 @@
-#include "view/image_area.h"
-#include "view/gtk_global.h"
+#include "window/image_area.h"
+#include "window/gtk_global.h"
 
 //     20                                                                   20
 //    |-----------------------------------------------------------------------|

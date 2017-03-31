@@ -1,5 +1,5 @@
-#include "view/top_area.h"
-#include "view/gtk_global.h"
+#include "window/top_area.h"
+#include "window/gtk_global.h"
 #include "config.h"
 
 #include <sstream>

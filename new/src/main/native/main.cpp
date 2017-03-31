@@ -1,7 +1,7 @@
 #include <gtk/gtk.h>
 
-#include "view/gtk_global.h"
-#include "view/main_window.h"
+#include "window/gtk_global.h"
+#include "window/main_window.h"
 
 int main(int argc, char *argv[]) {
   gtk_init(&argc, &argv);

@@ -1,5 +1,5 @@
-#include "view/menu_biopsyverify.h"
-#include "view/gtk_global.h"
+#include "window/menu_biopsyverify.h"
+#include "window/gtk_global.h"
 
 using namespace std;
 

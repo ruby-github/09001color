@@ -1,11 +1,11 @@
 #ifndef __main_window_h__
 #define __main_window_h__
 
-#include "view/hint_area.h"
-#include "view/image_area.h"
-#include "view/menu_area.h"
-#include "view/shortcut_menu_area.h"
-#include "view/top_area.h"
+#include "window/hint_area.h"
+#include "window/image_area.h"
+#include "window/menu_area.h"
+#include "window/shortcut_menu_area.h"
+#include "window/top_area.h"
 
 class MainWindow {
 public:

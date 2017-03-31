@@ -1,5 +1,5 @@
-#include "view/menu_bodymark.h"
-#include "view/gtk_global.h"
+#include "window/menu_bodymark.h"
+#include "window/gtk_global.h"
 
 using namespace std;
 
