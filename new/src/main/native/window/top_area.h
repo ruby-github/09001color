@@ -12,11 +12,11 @@ public:
   void set_size(int width, int height);
   void initialize(GtkBox* box);
 
-  void set_patient_info(const std::string name, const std::string sex, const unsigned int age, const std::string id);
+  void update_patient_info(const std::string name, const std::string sex, const unsigned int age, const std::string id);
 
-  void set_tis(const double tis);
-  void set_probe_type(const std::string probe_type);
-  void set_check_mode(const std::string check_mode);
+  void update_tis(const double tis);
+  void update_probe_type(const std::string probe_type);
+  void update_check_mode(const std::string check_mode);
 
   void update_hospital_name(const std::string name);
   void update_info();

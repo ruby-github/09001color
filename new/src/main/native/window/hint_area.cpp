@@ -126,98 +126,114 @@ void HintArea::initialize(GtkBox* box) {
 void HintArea::update_hint(const string hint, unsigned int timeout) {
   if (m_label_hint != NULL) {
     gtk_label_set_text(m_label_hint, hint.c_str());
-  }
 
-  if (timeout > 0) {
-    g_timeout_add_seconds(timeout, time_clear_handler, this);
+    if (timeout > 0) {
+      g_timeout_add_seconds(timeout, time_clear_handler, this);
+    }
   }
 }
 
 void HintArea::update_network(bool on) {
-  if (on) {
-    set_image(m_network, icon_network_list[0]);
-  } else {
-    set_image(m_network, icon_network_list[1]);
+  if (m_network != NULL) {
+    if (on) {
+      set_image(m_network, icon_network_list[0]);
+    } else {
+      set_image(m_network, icon_network_list[1]);
+    }
   }
 }
 
 void HintArea::update_audio(bool on) {
-  if (on) {
-    set_image(m_network, icon_audio_list[0]);
-  } else {
-    set_image(m_network, icon_audio_list[1]);
+  if (m_audio != NULL) {
+    if (on) {
+      set_image(m_audio, icon_audio_list[0]);
+    } else {
+      set_image(m_audio, icon_audio_list[1]);
+    }
   }
 }
 
 void HintArea::update_replay(bool on) {
-  if (on) {
-    m_scan_count = -1;
-    set_image(m_replay, icon_replay);
-  } else {
-    m_scan_count = 0;
-    g_timeout_add(500, time_scan_handler, this);
+  if (m_replay != NULL) {
+    if (on) {
+      m_scan_count = -1;
+      set_image(m_replay, icon_replay);
+    } else {
+      m_scan_count = 0;
+      g_timeout_add(500, time_scan_handler, this);
+    }
   }
 }
 
 void HintArea::update_flashkey(bool on) {
-  if (on) {
-    set_image(m_flashkey, icon_flashkey);
-  } else {
-    set_image(m_flashkey, "");
+  if (m_flashkey != NULL) {
+    if (on) {
+      set_image(m_flashkey, icon_flashkey);
+    } else {
+      set_image(m_flashkey, "");
+    }
   }
 }
 
 void HintArea::update_cdrom(bool on) {
-  if (on) {
-    set_image(m_cdrom, icon_cdrom);
-  } else {
-    set_image(m_cdrom, "");
+  if (m_cdrom != NULL) {
+    if (on) {
+      set_image(m_cdrom, icon_cdrom);
+    } else {
+      set_image(m_cdrom, "");
+    }
   }
 }
 
 void HintArea::update_battery() {
-  unsigned int capacity_level = 0;
+  if (m_battery != NULL) {
+    unsigned int capacity_level = 0;
 
-  Battery battery;
-  int capacity = battery.capacity();
+    Battery battery;
+    int capacity = battery.capacity();
 
-  if (capacity < 10) {
-    capacity_level = 0;
-  } else if (capacity < 30) {
-    capacity_level = 1;
-  } else if (capacity < 50) {
-    capacity_level = 2;
-  } else if (capacity < 70) {
-    capacity_level = 3;
-  } else if (capacity < 90) {
-    capacity_level = 4;
-  } else {
-    capacity_level = 5;
-  }
+    if (capacity < 10) {
+      capacity_level = 0;
+    } else if (capacity < 30) {
+      capacity_level = 1;
+    } else if (capacity < 50) {
+      capacity_level = 2;
+    } else if (capacity < 70) {
+      capacity_level = 3;
+    } else if (capacity < 90) {
+      capacity_level = 4;
+    } else {
+      capacity_level = 5;
+    }
 
-  if (capacity_level != m_capacity_level) {
-    m_capacity_level = capacity_level;
+    if (capacity_level != m_capacity_level) {
+      m_capacity_level = capacity_level;
 
-    set_image(m_battery, icon_battery_list[m_capacity_level]);
+      set_image(m_battery, icon_battery_list[m_capacity_level]);
+    }
   }
 }
 
 void HintArea::update_printer(bool on) {
-  if (on) {
-    set_image(m_printer, icon_printer);
-  } else {
-    set_image(m_printer, "");
+  if (m_printer != NULL) {
+    if (on) {
+      set_image(m_printer, icon_printer);
+    } else {
+      set_image(m_printer, "");
+    }
   }
 }
 
 void HintArea::update_scan() {
-  if (m_scan_count >= 0) {
-    if (m_scan_count > 4) {
-      m_scan_count = 0;
-    }
+  if (m_replay != NULL) {
+    if (m_scan_count >= 0) {
+      if (m_scan_count > 4) {
+        m_scan_count = 0;
+      }
 
-    set_image(m_replay, icon_scan_list[m_scan_count]);
-    m_scan_count += 1;
+      set_image(m_replay, icon_scan_list[m_scan_count]);
+      m_scan_count += 1;
+    }
   }
 }
 

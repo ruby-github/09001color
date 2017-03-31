@@ -19,7 +19,7 @@ void adjust_font_size(GtkWidget* widget, const std::string family, const std::st
 
 void set_image(GtkImage* image, const std::string filename);
 
-GtkLabel* create_label(const std::string text);
+GtkLabel* create_label(const std::string str);
 GtkButton* create_button(const std::string label);
 GtkButton* create_button_with_image(const std::string filename, const int width, const int height);
 GtkNotebook* create_notebook();

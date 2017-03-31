@@ -2,6 +2,8 @@
 #include "window/gtk_global.h"
 #include "config.h"
 
+#include <sstream>
+
 using namespace std;
 
 //       |------------------------------------- 1024 --------------------------------------|
@@ -136,15 +138,21 @@ void MainWindow::initialize() {
 
   show();
 
+  ////////////////////
   test();
+  ////////////////////
 }
 
 void MainWindow::show() {
-  gtk_widget_show_all(m_window);
+  if (m_window != NULL) {
+    gtk_widget_show_all(m_window);
+  }
 }
 
 void MainWindow::hide() {
-  gtk_widget_hide_all(m_window);
+  if (m_window != NULL) {
+    gtk_widget_hide_all(m_window);
+  }
 }
 
 // ---------------------------------------------------------
@@ -194,10 +202,21 @@ void MainWindow::initialize_hint_image(GtkBox* box) {
   m_hint_area->initialize(box);
 }
 
+// ---------------------------------------------------------
+
 void MainWindow::test() {
   m_top_area->update_hospital_name("南山医院");
-  m_top_area->set_patient_info("jack", "male", 21, "201703270001");
+  m_top_area->update_patient_info("jack", "male", 21, "201703270001");
 
-  //m_hint_area->update_flashkey(true);
-  //m_hint_area->update_cdrom(true);
+  stringstream ss;
+  ss << _("<span font_desc='16' foreground='yellow'>B</span>") << endl;
+  ss << endl;
+  ss << endl;
+  ss << _("<span font_desc='16' foreground='yellow'>C</span>") << endl;
+
+  m_image_area->update_image_param(ss.str());
+  m_menu_area->update_menu(MenuArea::MENU_M);
+
+  m_hint_area->update_flashkey(true);
+  m_hint_area->update_cdrom(true);
 }

@@ -1,6 +1,8 @@
 #include "window/menu_area.h"
 #include "window/gtk_global.h"
 
+using namespace std;
+
 // ---   |---------------|
 //  |    |               |
 //  | 60 |     label     |
@@ -170,253 +172,22 @@ void MenuArea::initialize(GtkBox* box) {
   gtk_box_pack_start(box, (GtkWidget*)m_notebook, TRUE, TRUE, 0);
 
   initialize_notebook();
-
-  show_menu(MENU_2D);
 }
 
-void MenuArea::show_menu(EnumMenuType menu_type) {
-  if (m_notebook == NULL) {
-    return;
-  }
+void MenuArea::update_menu(EnumMenuType menu_type) {
+  if (m_notebook != NULL) {
+    gtk_notebook_set_current_page(m_notebook, notebook_page_to_menu_type(menu_type));
 
-  switch (menu_type) {
-  case MENU_2D:
-    {
-      gtk_notebook_set_current_page(m_notebook, 0);
-
-      break;
-    }
-  case MENU_M:
-    {
-      gtk_notebook_set_current_page(m_notebook, 1);
-
-      break;
-    }
-  case MENU_PW:
-    {
-      gtk_notebook_set_current_page(m_notebook, 2);
-
-      break;
-    }
-  case MENU_CW:
-    {
-      gtk_notebook_set_current_page(m_notebook, 3);
-
-      break;
-    }
-  case MENU_CFM:
-    {
-      gtk_notebook_set_current_page(m_notebook, 4);
-
-      break;
-    }
-  case MENU_PDI:
-    {
-      gtk_notebook_set_current_page(m_notebook, 4);
-
-      break;
-    }
-  case MENU_PWCFM:
-    {
-      gtk_notebook_set_current_page(m_notebook, 4);
-      gtk_label_set_text(m_label, _("PW Color Mode"));
-
-      break;
-    }
-  case MENU_CWCFM:
-    {
-      gtk_notebook_set_current_page(m_notebook, 4);
-
-      break;
-    }
-  case MENU_MEASURE2D:
-    {
-      gtk_notebook_set_current_page(m_notebook, 5);
-
-      break;
-    }
-  case MENU_CALC:
-    {
-      gtk_notebook_set_current_page(m_notebook, 6);
-
-      break;
-    }
-  case MENU_NOTE:
-    {
-      gtk_notebook_set_current_page(m_notebook, 7);
-
-      break;
-    }
-  case MENU_BODYMARK:
-    {
-      gtk_notebook_set_current_page(m_notebook, 8);
-
-      break;
-    }
-  case MENU_REVIEW:
-    {
-      gtk_notebook_set_current_page(m_notebook, 9);
-
-      break;
-    }
-  case MENU_BIOPSY:
-    {
-      gtk_notebook_set_current_page(m_notebook, 10);
-
-      break;
-    }
-  case MENU_BIOPSYBRACKET:
-    {
-      gtk_notebook_set_current_page(m_notebook, 11);
-
-      break;
-    }
-  case MENU_BIOPSYVERIFY:
-    {
-      gtk_notebook_set_current_page(m_notebook, 12);
-
-      break;
-    }
-  case MENU_EFOV_PREPARE:
-    {
-      gtk_notebook_set_current_page(m_notebook, 13);
-
-      break;
-    }
-  case MENU_EFOV_CAPTURE:
-    {
-      gtk_notebook_set_current_page(m_notebook, 13);
-
-      break;
-    }
-  case MENU_EFOV_VIEW:
-    {
-      gtk_notebook_set_current_page(m_notebook, 13);
-
-      break;
-    }
-  case MENU_EFOV_REVIEW:
-    {
-      gtk_notebook_set_current_page(m_notebook, 13);
-
-      break;
-    }
-  case MENU_SYSTEM:
-    {
-      gtk_notebook_set_current_page(m_notebook, 14);
-
-      break;
-    }
-  default:
-    {
-      gtk_label_set_text(m_label, "");
-
-      break;
+    if (m_label != NULL) {
+      update_label(menu_type);
     }
   }
-
-  update_label(menu_type);
 }
 
 void MenuArea::notebook_changed(unsigned int page_num) {
-  EnumMenuType menu_type = MENU_2D;
-
-  switch (page_num) {
-  case 0:
-    {
-      menu_type = MENU_2D;
-
-      break;
-    }
-  case 1:
-    {
-      menu_type = MENU_M;
-
-      break;
-    }
-  case 2:
-    {
-      menu_type = MENU_PW;
-
-      break;
-    }
-  case 3:
-    {
-      menu_type = MENU_CW;
-
-      break;
-    }
-  case 4:
-    {
-      menu_type = MENU_CFM;
-
-      break;
-    }
-  case 5:
-    {
-      menu_type = MENU_MEASURE2D;
-
-      break;
-    }
-  case 6:
-    {
-      menu_type = MENU_CALC;
-
-      break;
-    }
-  case 7:
-    {
-      menu_type = MENU_NOTE;
-
-      break;
-    }
-  case 8:
-    {
-      menu_type = MENU_BODYMARK;
-
-      break;
-    }
-  case 9:
-    {
-      menu_type = MENU_REVIEW;
-
-      break;
-    }
-  case 10:
-    {
-      menu_type = MENU_BIOPSY;
-
-      break;
-    }
-  case 11:
-    {
-      menu_type = MENU_BIOPSYBRACKET;
-
-      break;
-    }
-  case 12:
-    {
-      menu_type = MENU_BIOPSYVERIFY;
-
-      break;
-    }
-  case 13:
-    {
-      menu_type = MENU_EFOV_VIEW;
-
-      break;
-    }
-  case 14:
-    {
-      menu_type = MENU_SYSTEM;
-
-      break;
-    }
-  default:
-    break;
+  if (m_label != NULL) {
+    update_label(notebook_page_to_menu_type(page_num));
   }
-
-  update_label(menu_type);
 }
 
 // ---------------------------------------------------------
@@ -668,4 +439,242 @@ void MenuArea::update_label(EnumMenuType menu_type) {
   }
 
   adjust_font_size((GtkWidget*)m_label, "WenQuanYi Zen Hei", "", 14, m_width, LABEL_HEIGHT);
+}
+
+MenuArea::EnumMenuType MenuArea::notebook_page_to_menu_type(const unsigned int page_num) {
+  EnumMenuType menu_type = MENU_2D;
+
+  switch (page_num) {
+  case 0:
+    {
+      menu_type = MENU_2D;
+
+      break;
+    }
+  case 1:
+    {
+      menu_type = MENU_M;
+
+      break;
+    }
+  case 2:
+    {
+      menu_type = MENU_PW;
+
+      break;
+    }
+  case 3:
+    {
+      menu_type = MENU_CW;
+
+      break;
+    }
+  case 4:
+    {
+      menu_type = MENU_CFM;
+
+      break;
+    }
+  case 5:
+    {
+      menu_type = MENU_MEASURE2D;
+
+      break;
+    }
+  case 6:
+    {
+      menu_type = MENU_CALC;
+
+      break;
+    }
+  case 7:
+    {
+      menu_type = MENU_NOTE;
+
+      break;
+    }
+  case 8:
+    {
+      menu_type = MENU_BODYMARK;
+
+      break;
+    }
+  case 9:
+    {
+      menu_type = MENU_REVIEW;
+
+      break;
+    }
+  case 10:
+    {
+      menu_type = MENU_BIOPSY;
+
+      break;
+    }
+  case 11:
+    {
+      menu_type = MENU_BIOPSYBRACKET;
+
+      break;
+    }
+  case 12:
+    {
+      menu_type = MENU_BIOPSYVERIFY;
+
+      break;
+    }
+  case 13:
+    {
+      menu_type = MENU_EFOV_VIEW;
+
+      break;
+    }
+  case 14:
+    {
+      menu_type = MENU_SYSTEM;
+
+      break;
+    }
+  default:
+    break;
+  }
+
+  return menu_type;
+}
+
+unsigned int MenuArea::menu_type_to_notebook_page(const EnumMenuType menu_type) {
+  unsigned int page_num = 0;
+
+  switch (menu_type) {
+  case MENU_2D:
+    {
+      page_num = 0;
+
+      break;
+    }
+  case MENU_M:
+    {
+      page_num = 1;
+
+      break;
+    }
+  case MENU_PW:
+    {
+      page_num = 2;
+
+      break;
+    }
+  case MENU_CW:
+    {
+      page_num = 3;
+
+      break;
+    }
+  case MENU_CFM:
+    {
+      page_num = 4;
+
+      break;
+    }
+  case MENU_PDI:
+    {
+      page_num = 4;
+
+      break;
+    }
+  case MENU_PWCFM:
+    {
+      page_num = 4;
+
+      break;
+    }
+  case MENU_CWCFM:
+    {
+      page_num = 4;
+
+      break;
+    }
+  case MENU_MEASURE2D:
+    {
+      page_num = 5;
+
+      break;
+    }
+  case MENU_CALC:
+    {
+      page_num = 6;
+
+      break;
+    }
+  case MENU_NOTE:
+    {
+      page_num = 7;
+
+      break;
+    }
+  case MENU_BODYMARK:
+    {
+      page_num = 8;
+
+      break;
+    }
+  case MENU_REVIEW:
+    {
+      page_num = 9;
+
+      break;
+    }
+  case MENU_BIOPSY:
+    {
+      page_num = 10;
+
+      break;
+    }
+  case MENU_BIOPSYBRACKET:
+    {
+      page_num = 11;
+
+      break;
+    }
+  case MENU_BIOPSYVERIFY:
+    {
+      page_num = 12;
+
+      break;
+    }
+  case MENU_EFOV_PREPARE:
+    {
+      page_num = 13;
+
+      break;
+    }
+  case MENU_EFOV_CAPTURE:
+    {
+      page_num = 13;
+
+      break;
+    }
+  case MENU_EFOV_VIEW:
+    {
+      page_num = 13;
+
+      break;
+    }
+  case MENU_EFOV_REVIEW:
+    {
+      page_num = 13;
+
+      break;
+    }
+  case MENU_SYSTEM:
+    {
+      page_num = 14;
+
+      break;
+    }
+  default:
+    break;
+  }
+
+  return page_num;
 }

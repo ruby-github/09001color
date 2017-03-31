@@ -55,6 +55,8 @@ void ShortcutMenuArea::initialize(GtkBox* box) {
   initialize_knob(box_knob);
 }
 
+// ---------------------------------------------------------
+
 void ShortcutMenuArea::initialize_knob(GtkBox* box) {
   // left
   m_button_left = create_button(_("<<"));

@@ -70,7 +70,7 @@ void TopArea::initialize(GtkBox* box) {
   g_timeout_add(500, time_handler, this);
 }
 
-void TopArea::set_patient_info(const std::string name, const std::string sex, const unsigned int age, const std::string id) {
+void TopArea::update_patient_info(const std::string name, const std::string sex, const unsigned int age, const std::string id) {
   m_patient_name = name;
   m_patient_sex = sex;
   m_patient_age = age;
@@ -79,19 +79,19 @@ void TopArea::set_patient_info(const std::string name, const std::string sex, co
   update_info();
 }
 
-void TopArea::set_tis(const double tis) {
+void TopArea::update_tis(const double tis) {
   m_tis = tis;
 
   update_info();
 }
 
-void TopArea::set_probe_type(const std::string probe_type) {
+void TopArea::update_probe_type(const std::string probe_type) {
   m_probe_type = probe_type;
 
   update_info();
 }
 
-void TopArea::set_check_mode(const std::string check_mode) {
+void TopArea::update_check_mode(const std::string check_mode) {
   m_check_mode = check_mode;
 
   update_info();
@@ -108,60 +108,62 @@ void TopArea::update_hospital_name(const std::string name) {
 
 // 更新病人信息和设备信息
 void TopArea::update_info() {
-  stringstream ss;
+  if (m_label_info != NULL) {
+    stringstream ss;
 
-  // 更新病人信息(姓名, 性别, 年龄, ID)
+    // 更新病人信息(姓名, 性别, 年龄, ID)
 
-  ss << _("Name:") << " ";
-  ss.width(10);
-  ss << std::left << m_patient_name;
-  ss << " ";
+    ss << _("Name:") << " ";
+    ss.width(10);
+    ss << std::left << m_patient_name;
+    ss << " ";
 
-  ss << _("Gender:") << " ";
-  ss.width(6);
-  ss << std::left << m_patient_sex;
-  ss << " ";
+    ss << _("Gender:") << " ";
+    ss.width(6);
+    ss << std::left << m_patient_sex;
+    ss << " ";
 
-  ss << _("Age:") << " ";
-  ss.width(4);
-  ss << std::left << m_patient_age;
-  ss << " ";
+    ss << _("Age:") << " ";
+    ss.width(4);
+    ss << std::left << m_patient_age;
+    ss << " ";
 
-  ss << _("ID:") << " ";
-  ss << m_patient_id;
-  ss << endl;
+    ss << _("ID:") << " ";
+    ss << m_patient_id;
+    ss << endl;
 
-  // 更新设备信息(声功率, 探头, 检查模式)
+    // 更新设备信息(声功率, 探头, 检查模式)
 
-  if (m_tis < 0.0001) {
-  } else {
-    if (m_tis < 0.4) {
+    if (m_tis < 0.0001) {
+    } else {
+      if (m_tis < 0.4) {
+        ss.width(16);
+        ss << std::left << _("TIS < 0.4");
+        ss << " ";
+      } else {
+        ss << _("TIS") << " ";
+        ss.width(12);
+        ss << std::left << ((int)(m_tis * 10)) / 10;
+        ss << " ";
+      }
+    }
+
+    if (m_probe_type.empty()) {
       ss.width(16);
-      ss << std::left << _("TIS < 0.4");
+      ss << std::left << _("No Probe");
       ss << " ";
     } else {
-      ss << _("TIS") << " ";
-      ss.width(12);
-      ss << std::left << ((int)(m_tis * 10)) / 10;
+      ss << _("Probe") << " ";
+      ss.width(10);
+      ss << std::left << m_probe_type;
       ss << " ";
     }
+
+    ss << _("Mode") << " ";
+    ss << m_check_mode;
+
+    gtk_label_set_text(m_label_info, ss.str().c_str());
   }
-
-  if (m_probe_type.empty()) {
-    ss.width(16);
-    ss << std::left << _("No Probe");
-    ss << " ";
-  } else {
-    ss << _("Probe") << " ";
-    ss.width(10);
-    ss << std::left << m_probe_type;
-    ss << " ";
-  }
-
-  ss << _("Mode") << " ";
-  ss << m_check_mode;
-
-  gtk_label_set_text(m_label_info, ss.str().c_str());
 }
 
 // 更新时间

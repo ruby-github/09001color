@@ -158,8 +158,8 @@ void set_image(GtkImage* image, const string filename) {
   }
 }
 
-GtkLabel* create_label(const string text) {
-  GtkLabel* label = GTK_LABEL(gtk_label_new(text.c_str()));
+GtkLabel* create_label(const string str) {
+  GtkLabel* label = GTK_LABEL(gtk_label_new(str.c_str()));
 
   set_font((GtkWidget*)label, "", "", 12);
 

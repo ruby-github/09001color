@@ -50,12 +50,15 @@ public:
   void set_size(int width, int height);
   void initialize(GtkBox* box);
 
-  void show_menu(EnumMenuType menu_type);
+  void update_menu(EnumMenuType menu_type);
   void notebook_changed(unsigned int page_num);
 
 private:
   void initialize_notebook();
   void update_label(EnumMenuType menu_type);
+
+  EnumMenuType notebook_page_to_menu_type(const unsigned int page_num);
+  unsigned int menu_type_to_notebook_page(const EnumMenuType menu_type);
 
 private:
   int m_width;
