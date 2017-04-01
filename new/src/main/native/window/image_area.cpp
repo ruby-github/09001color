@@ -83,7 +83,7 @@ void ImageArea::update_image_param(const std::string str) {
 // ---------------------------------------------------------
 
 void ImageArea::initialize_param(GtkBox* box) {
-  m_label_param = create_label("");
+  m_label_param = create_label();
 
   gtk_misc_set_alignment(GTK_MISC(m_label_param), 0.1, 0);
   gtk_container_add(GTK_CONTAINER(box), (GtkWidget*)m_label_param);

@@ -241,7 +241,7 @@ void HintArea::update_scan() {
 
 // 提示信息
 void HintArea::initialize_hint(GtkBox* box) {
-  m_label_hint = create_label("");
+  m_label_hint = create_label();
   gtk_container_add(GTK_CONTAINER(box), (GtkWidget*)m_label_hint);
 }
 
@@ -250,22 +250,22 @@ void HintArea::initialize_status(GtkBox* box) {
   GtkTable* table = GTK_TABLE(gtk_table_new(1, 6, TRUE));
   gtk_container_add(GTK_CONTAINER(box), (GtkWidget*)table);
 
-  m_network = create_image(icon_network_list[0], 0, 0);
+  m_network = create_image(icon_network_list[0]);
   gtk_table_attach_defaults(table, (GtkWidget*)m_network, 0, 1, 0, 1);
 
-  m_audio = create_image(icon_audio_list[0], 0, 0);
+  m_audio = create_image(icon_audio_list[0]);
   gtk_table_attach_defaults(table, (GtkWidget*)m_audio, 1, 2, 0, 1);
 
-  m_replay = create_image("", 0, 0);
+  m_replay = create_image();
   gtk_table_attach_defaults(table, (GtkWidget*)m_replay, 2, 3, 0, 1);
 
-  m_flashkey = create_image("", 0, 0);
+  m_flashkey = create_image();
   gtk_table_attach_defaults(table, (GtkWidget*)m_flashkey, 3, 4, 0, 1);
 
-  m_cdrom = create_image("", 0, 0);
+  m_cdrom = create_image();
   gtk_table_attach_defaults(table, (GtkWidget*)m_cdrom, 4, 5, 0, 1);
 
-  m_battery = create_image(icon_battery_list[m_capacity_level], 0, 0);
+  m_battery = create_image(icon_battery_list[m_capacity_level]);
   gtk_table_attach_defaults(table, (GtkWidget*)m_battery, 5, 6, 0, 1);
 
   //m_printer = create_image();

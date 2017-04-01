@@ -1,5 +1,6 @@
 #include "window/main_window.h"
 #include "window/gtk_global.h"
+#include "config/settings.h"
 #include "config.h"
 
 #include <sstream>
@@ -205,7 +206,7 @@ void MainWindow::initialize_hint_image(GtkBox* box) {
 // ---------------------------------------------------------
 
 void MainWindow::test() {
-  m_top_area->update_hospital_name("南山医院");
+  m_top_area->update_hospital_name(get_settings_hospital());
   m_top_area->update_patient_info("jack", "male", 21, "201703270001");
 
   stringstream ss;

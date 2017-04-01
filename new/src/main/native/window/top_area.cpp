@@ -194,7 +194,7 @@ void TopArea::initialize_logo(GtkBox* box) {
 
 // 医院名称
 void TopArea::initialize_hospital(GtkBox* box) {
-  m_label_hospital = create_label("");
+  m_label_hospital = create_label();
   gtk_container_add(GTK_CONTAINER(box), (GtkWidget*)m_label_hospital);
 
   gtk_misc_set_alignment(GTK_MISC(m_label_hospital), 0.5, 0.5);
@@ -202,12 +202,12 @@ void TopArea::initialize_hospital(GtkBox* box) {
 
 // 病人信息和设备信息
 void TopArea::initialize_info(GtkBox* box) {
-  m_label_info = create_label("");
+  m_label_info = create_label();
   gtk_container_add(GTK_CONTAINER(box), (GtkWidget*)m_label_info);
 }
 
 // 时间信息
 void TopArea::initialize_time(GtkBox* box) {
-  m_label_time = create_label("");
+  m_label_time = create_label();
   gtk_container_add(GTK_CONTAINER(box), (GtkWidget*)m_label_time);
 }

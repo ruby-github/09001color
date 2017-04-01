@@ -155,7 +155,7 @@ void MenuArea::set_size(int width, int height) {
 
 void MenuArea::initialize(GtkBox* box) {
   // label
-  m_label = create_label("Sub Menu");
+  m_label = create_label();
   set_font((GtkWidget*)m_label, "WenQuanYi Zen Hei", "", 14);
   gtk_misc_set_alignment(GTK_MISC(m_label), 0.5, 0.5);
 

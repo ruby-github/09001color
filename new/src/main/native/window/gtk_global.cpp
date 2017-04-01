@@ -1,7 +1,7 @@
 #include "window/gtk_global.h"
+#include "utils/utils.h"
 #include "config.h"
 
-#include <unistd.h>
 #include <sstream>
 #include <string>
 
@@ -9,8 +9,6 @@ using namespace std;
 
 #define I18N_PACKAGE  "09001_lang"
 #define I18N_LOCALE   "/usr/share/locale"
-
-string g_application_path = "";
 
 GdkColor* g_color = NULL;
 GdkColor* g_bg_color = NULL;
@@ -20,30 +18,6 @@ void i18n() {
   bindtextdomain(I18N_PACKAGE, I18N_LOCALE);
   bind_textdomain_codeset(I18N_PACKAGE, "UTF-8");
   textdomain(I18N_PACKAGE);
-}
-
-const string get_resource_file(const string name) {
-  if (g_application_path.empty()) {
-    const int MAX_PATH = 1024;
-    char buf[MAX_PATH] = {0};
-
-    int count = readlink("/proc/self/exe", buf, MAX_PATH);
-
-    if (count > 0 && count < MAX_PATH) {
-      buf[count] = '\0';
-
-      string filename = string(buf);
-      size_t pos = filename.find_last_of('/');
-
-      if (pos != string::npos) {
-        g_application_path = filename.substr(0, pos);
-      }
-    } else {
-      g_application_path = ".";
-    }
-  }
-
-  return g_application_path + "/" + name;
 }
 
 const GdkColor* get_color(const string color_name) {
