@@ -112,13 +112,18 @@
                   <fileset dir='src/assembly'/>
                 </copy>
 
-                <copy todir='${output}' overwrite='true' failonerror='true'>
-                  <fileset dir='src/assembly'/>
-                </copy>
-
                 <copy todir='${output}/lib' overwrite='true' failonerror='true'>
                   <fileset dir='thirdparty/bin'/>
                 </copy>
+
+                <copy file='${project.build.directory}/${project.artifactId}.${project.packaging}' tofile='${output}/${project.artifactId}'/>
+
+                <exec executable='strip' failonerror='false'>
+                  <arg line='${output}/${project.artifactId}'/>
+                </exec>
+
+                <chmod file='${output}/*.sh' perm='0777'/>
+                <chmod file='${output}/${project.artifactId}' perm='0777'/>
               </target>
             </configuration>
           </execution>
