@@ -8,6 +8,9 @@ using namespace std;
 
 string g_application_path = "";
 
+void logger(const string str) {
+}
+
 const string to_string(const int value) {
   stringstream ss;
   ss << value;

@@ -1,7 +1,10 @@
 #include "device/battery.h"
+#include "device/i2c_cgosgpio.h"
+#include "device/i2c_interface.h"
+#include "utils/utils.h"
 
-#define BATTERY_ADDR 0x0b
-#define BATTERY_CHARGE 0x0d
+#define BATTERY_ADDR      0x0b
+#define BATTERY_REG_ADDR  0x0d
 
 Battery::Battery() {
 }
@@ -12,17 +15,15 @@ Battery::~Battery() {
 int Battery::capacity() {
   unsigned char capacity = 0;
 
-  /*I2CInterface i2c;
+  I2CInterface i2c;
 
-  if (i2c.I2CRead(BATTERY_ADDR, BATTERY_CHARGE, 1, &capacity) < 0) {
-    CgosGpioI2C cgosI2C;
+  if (!i2c.read(BATTERY_ADDR, BATTERY_REG_ADDR, &capacity, 1)) {
+    I2CCgosGpio cgos;
 
-    if (cgosI2C.I2CRead(BATTERY_ADDR, BATTERY_CHARGE, 1, &capacity) < 0) {
-      g_logger("read battery capacity fail");
+    if (!cgos.read(BATTERY_ADDR, BATTERY_REG_ADDR, &capacity, 1)) {
+      logger("read battery capacity fail");
     }
-  }*/
-
-  capacity = 30;
+  }
 
   return capacity;
 }
