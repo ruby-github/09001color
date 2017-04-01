@@ -7,4 +7,4 @@ echo "SET LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
 
 cd $DIR
 
-./09001Color
+./09001color
