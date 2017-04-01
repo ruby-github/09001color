@@ -34,6 +34,6 @@
 #define ICON_PRINTER          "icon/printer.png"
 #define ICON_REPLAY           "icon/replay.png"
 
-#define SETTINGS_SYSSETTING   "settings/SysSetting.ini"
+#define SETTINGS_SYS_SETTING  "settings/SysSetting.ini"
 
 #endif
