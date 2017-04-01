@@ -3,7 +3,12 @@
 
 #include <string>
 
-std::string get_settings_hospital();
-void set_settings_hospital(const std::string hospital);
+// SysSetting
+
+std::string get_settings(const std::string file, const std::string group, const std::string name);
+void set_settings(const std::string file, const std::string group, const std::string name, const std::string value);
+
+std::string get_settings_sys_setting(const std::string group, const std::string name);
+void set_settings_sys_setting(const std::string group, const std::string name, const std::string value);
 
 #endif

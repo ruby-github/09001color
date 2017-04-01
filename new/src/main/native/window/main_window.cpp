@@ -206,7 +206,7 @@ void MainWindow::initialize_hint_image(GtkBox* box) {
 // ---------------------------------------------------------
 
 void MainWindow::test() {
-  m_top_area->update_hospital_name(get_settings_hospital());
+  m_top_area->update_hospital_name(get_settings_sys_setting("GeneralSetting", "Hospital"));
   m_top_area->update_patient_info("jack", "male", 21, "201703270001");
 
   stringstream ss;
